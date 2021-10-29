@@ -1,0 +1,18 @@
+es:
+  errors:
+    messages:
+      greater_than_or_equal_to:     'El número debe ser mayor o igual que %{count}'
+      taken:                        'Ya fue tomado'
+      blank:                        'No puede estar en blanco'
+      not_a_number:                 'Debe ser un número'
+      record_not_found:             'El recurso ya no se encuentra disponible'
+      unkown_format:                'Error de formato, por favor vuelva a intentarlo sin abrirlo en otra ventana'
+  activerecord:
+    errors:
+      models:
+        user_patient:
+          attributes:
+            email:
+              invalid:               'Ingrese un email valido'
+            password_confirmation:
+              confirmation:          'Las contraseñas deben coincidir'

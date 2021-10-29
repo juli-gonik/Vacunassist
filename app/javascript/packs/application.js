@@ -3,6 +3,13 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+//= require jquery3
+//= require jquery_ujs
+//= require popper
+//= require bootstrap
+//= require turbolinks
+//= require_tree .
+
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 
