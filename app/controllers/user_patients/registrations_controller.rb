@@ -44,16 +44,6 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
   def user_patient_params
     params.require(:user_patient).permit!
   end
-  # GET /resource/sign_up
-  # def new
-  #   super
-  # end
-
-  # POST /resource
-  # def create
-  #   super
-  # end
-
   # GET /resource/edit
   # def edit
   #   super
