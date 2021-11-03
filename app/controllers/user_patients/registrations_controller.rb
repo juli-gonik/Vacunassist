@@ -15,6 +15,7 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
 
     if @user_patient.save
 
+      UserMailer.with(user: @user).email_check.deliver_later
       redirect_to root_path, notice: 'Registro exitoso, le llegará un correo para validar el email'
     else
       @gripe = @user_patient.appointments.select { |appointment| appointment.vaccine == 'gripe' }.first
