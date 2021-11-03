@@ -11,8 +11,19 @@ class Appointment < ApplicationRecord
     fiebre_amarilla: 2
   }
 
+  enum status: {
+    pending: 0,
+    confirmed: 1,
+    past: 2
+  }
+
+  enum tipo: {
+    sistema: 0,
+    pedido: 1
+  }
+
   def dose_one_date
-    return unless vaccine == 'covid' && (dose == 1 || dose == 2)
+    return false unless vaccine == 'covid' && (dose == 1 || dose == 2) && tipo == 'sistema'
 
     errors.add(:last_dose_date, :blank)
   end
