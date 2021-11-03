@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+puts 'Creando Vacunatorios'
+Vacunatorio.create(zone: 0)
+Vacunatorio.create(zone: 1)
+Vacunatorio.create(zone: 2)

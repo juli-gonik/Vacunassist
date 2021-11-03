@@ -1,5 +1,5 @@
 class UserPatient < User
-  validates :birth_date, :dni, :zone, :risk_patient, presence: true
+  validates :birth_date, :dni, presence: true
   validates :risk_patient, inclusion: [true, false]
   validates :risk_patient, exclusion: [nil]
   validates :dni, uniqueness: true
@@ -8,11 +8,7 @@ class UserPatient < User
   has_many :appointments, dependent: :destroy
   validates_associated :appointments
 
-  enum zone: {
-    municipalidad: 0,
-    terminal:      1,
-    cementerio:    2
-  }
+  belongs_to :vacunatorio
 
   accepts_nested_attributes_for :appointments
 
