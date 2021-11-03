@@ -1,22 +1,24 @@
 # frozen_string_literal: true
-
 class UserPatients::RegistrationsController < Devise::RegistrationsController
+  include MainHelper
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   def new
     @user_patient = UserPatient.new
-    @user_patient.appointments.build
+    @gripe = @user_patient.appointments.build(vaccine: 'gripe')
+    @covid = @user_patient.appointments.build(vaccine: 'covid')
   end
 
   def create
     @user_patient = UserPatient.new(user_patient_params)
 
     if @user_patient.save
+
       redirect_to root_path, notice: 'Registro exitoso, le llegará un correo para validar el email'
     else
-      @user_patient.appointments = [] #si se puede arreglar perofue
-      @user_patient.appointments.build
+      @gripe = @user_patient.appointments.select { |appointment| appointment.vaccine == 'gripe' }.first
+      @covid = @user_patient.appointments.select { |appointment| appointment.vaccine == 'covid' }.first
       render :new
     end
   end

@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   root 'main#home'
 
-  # resources :user_patients
+  resources :user_patients
 end
