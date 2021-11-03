@@ -16,3 +16,5 @@ es:
               invalid:               'Ingrese un email valido'
             password_confirmation:
               confirmation:          'Las contraseñas deben coincidir'
+            vacunatorio:
+              required:              'Campo obligatorio'
