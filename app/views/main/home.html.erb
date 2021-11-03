@@ -9,6 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <%if user_patient_signed_in?%>
+              <%= link_to 'Cerrar sesion', destroy_user_patient_session_path, method: delete%>
             <% else %>
               <li class="nav-item">
                 <%= link_to "Ingresar", new_user_patient_session_path, class:'nav-link' %>

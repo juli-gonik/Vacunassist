@@ -9,9 +9,8 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
-
 import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
+// import Turbolinks from "turbolinks"
 
 Rails.start()
-Turbolinks.start()
+// Turbolinks.start()
