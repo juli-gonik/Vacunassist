@@ -7,4 +7,10 @@ Rails.application.routes.draw do
   root 'main#home'
 
   # resources :user_patients
+
+  resources :users do
+    member do
+      get :confirm_email
+    end
+  end
 end

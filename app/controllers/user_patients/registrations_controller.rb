@@ -13,6 +13,7 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     @user_patient = UserPatient.new(user_patient_params)
 
     if @user_patient.save
+      UserMailer.with(user: @user).email_check.deliver_later
       redirect_to root_path, notice: 'Registro exitoso, le llegará un correo para validar el email'
     else
       @user_patient.appointments = [] #si se puede arreglar perofue
