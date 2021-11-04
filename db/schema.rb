@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_221514) do
+ActiveRecord::Schema.define(version: 2021_11_04_152155) do
 
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 0
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_221514) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "tipo"
+    t.boolean "fiebre_amarilla"
     t.index ["user_patient_id"], name: "index_appointments_on_user_patient_id"
   end
 
@@ -39,6 +40,8 @@ ActiveRecord::Schema.define(version: 2021_11_03_221514) do
     t.string "access_key"
     t.datetime "birth_date"
     t.boolean "risk_patient"
+    t.boolean "email_confirmed", default: false
+    t.string "confirm_token"
     t.integer "vacunatorio_id"
     t.index ["dni"], name: "index_users_on_dni", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
