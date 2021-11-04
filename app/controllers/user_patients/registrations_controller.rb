@@ -14,6 +14,7 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     @user_patient = UserPatient.new(user_patient_params)
 
     if @user_patient.save
+      @user_patient.appointments.each { |appointment| check_status(appointment) }
       new_covid_appointment(@user_patient)
       new_gripe_appointment(@user_patient)
       redirect_to root_path, notice: 'Registro exitoso, le llegará un correo para validar el email'
@@ -36,9 +37,20 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
 
   def new_gripe_appointment(user_patient)
     @gripe = @user_patient.appointments.select { |appointment| appointment.vaccine == 'gripe' }.last
-    return unless @gripe.last_dose_date < 1.year.ago
+    return unless @gripe.last_dose_date.present? && @gripe.last_dose_date < 1.year.ago
 
     user_patient.appointments.create(vaccine: 'gripe', tipo: 1, last_dose_date: @gripe.last_dose_date)
+  end
+
+  def check_status(appointment)
+    return unless appointment.tipo == 'sistema'
+
+    case appointment.vaccine
+    when 'covid'
+      appointment.not_valid! if appointment.dose.zero?
+    when 'gripe'
+      appointment.not_valid! if appointment.last_dose_date.nil?
+    end
   end
 
   def user_patient_params
