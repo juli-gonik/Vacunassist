@@ -1,0 +1,18 @@
+.center-things {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.middle-card {
+  position: relative;
+  top:50%;
+  transform: translateY(50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 5rem;
+}

@@ -1,0 +1,76 @@
+<%= render 'main/header'%>
+<div class="col container mt-5">
+  <h2 class="mb-4">Información personal</h2>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Nombre</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%="#{@user_patient.name} #{@user_patient.last_name}"%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Email</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%=@user_patient.email%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">DNI</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%=@user_patient.dni%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Zona de vacunación</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%=@user_patient.vacunatorio.zone.capitalize%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">¿Paciente de riesgo?</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%=@user_patient.risk_patient? ? 'Si' : 'No'%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Token</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%=@user_patient.access_key%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Fecha de nacimiento</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%=@user_patient.birth_date.strftime("%d/%m/%Y")%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <%= link_to 'Editar', edit_user_patient_path(@user_patient), class:'btn btn-success'%>
+          <%= link_to 'Editar contraseña', edit_password_user_patient_path(@user_patient), class:'btn btn-success ms-4'%>
+        </div>
+      </div>
+    </div>
+  </div>

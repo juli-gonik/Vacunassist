@@ -8,8 +8,8 @@
 
 .form-container {
   position: relative;
-  top:50%;
-  transform: translateY(50%);
+  top: 30%;
+  transform: translateY(30%);
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -23,6 +23,7 @@
   flex-direction: column;
   gap: 2rem;
 }
+
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;

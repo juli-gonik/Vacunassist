@@ -8,6 +8,8 @@ class UserPatient < User
   has_many :appointments, dependent: :destroy
   validates_associated :appointments
 
+  accepts_nested_attributes_for :appointments
+
   belongs_to :vacunatorio
 
   accepts_nested_attributes_for :appointments

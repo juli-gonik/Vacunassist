@@ -3,8 +3,6 @@ class Appointment < ApplicationRecord
 
   validate :dose_one_date
 
-  validates :last_dose_date, presence: true, if: -> { vaccine == 'gripe' }
-
   enum vaccine: {
     covid: 0,
     gripe: 1,
@@ -14,7 +12,8 @@ class Appointment < ApplicationRecord
   enum status: {
     pending: 0,
     confirmed: 1,
-    past: 2
+    past: 2,
+    not_valid: 3
   }
 
   enum tipo: {
@@ -22,9 +21,11 @@ class Appointment < ApplicationRecord
     pedido: 1
   }
 
-  def dose_one_date
-    return false unless vaccine == 'covid' && (dose == 1 || dose == 2) && tipo == 'sistema'
+  private
 
-    errors.add(:last_dose_date, :blank)
+  def dose_one_date
+    return unless vaccine == 'covid' && (dose == 1 || dose == 2) && tipo == 'sistema'
+
+    errors.add(:last_dose_date, :blank) if last_dose_date.blank?
   end
 end

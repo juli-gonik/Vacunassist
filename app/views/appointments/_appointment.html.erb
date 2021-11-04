@@ -1,0 +1,15 @@
+<% unless appointment.not_valid? %>
+  <div class="card-shadow d-flex flex-column justify-content-start align-items-start p-4 gap-3 mb-3">
+    <h2 class="badge bg-success"> <%= appointment.vaccine.capitalize %></h2>
+    <h6><i class="far fa-calendar-alt"></i> Fecha: <%=appointment_date(appointment)%></h6>
+    <% if appointment.vaccine == 'covid' %>
+      <h6><i class="fas fa-syringe"></i>Dosis: <%= appointment.dose %></h6>
+    <% end %>
+    <h6><i class="fas fa-map-marker-alt"></i> Zona:  <%= appointment.tipo == 'sistema' ? '-' : current_user_patient.vacunatorio.zone.capitalize %></h6>
+    <h6><i class="fas fa-clipboard-check"></i></i> Estado: <%= translate_status(appointment.status) %></h6>
+    <h6><i class="fas fa-question"></i> <span class="me-2">¿Dado por VacunAssist?: </span> <%= appointment.sistema? ? ' No' : ' Si' %></h6>
+    <% if appointment.past? && appointment.pedido? %>
+      <span><%= link_to 'Certificado', vaccine_certificates_user_patients_path(appointment_id: appointment), class:'text-success me-3'%> (Ctrl + p para descargar)</span>
+    <% end %>
+  </div>
+<% end %>
