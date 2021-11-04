@@ -12,6 +12,7 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
 
   def create
     @user_patient = UserPatient.new(user_patient_params)
+    @user_patient.access_key = SecureRandom.hex(4)
 
     if @user_patient.save
       @user_patient.appointments.each { |appointment| check_status(appointment) }

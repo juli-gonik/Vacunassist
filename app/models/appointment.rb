@@ -26,6 +26,6 @@ class Appointment < ApplicationRecord
   def dose_one_date
     return unless vaccine == 'covid' && (dose == 1 || dose == 2) && tipo == 'sistema'
 
-    errors.add(:last_dose_date, :blank)
+    errors.add(:last_dose_date, :blank) if last_dose_date.blank?
   end
 end
