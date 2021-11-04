@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :user_patients, controllers: {
     registrations: 'user_patients/registrations',
-    sessions:      'user_patients/sessions' }
+    sessions:      'user_patients/sessions',
+    confirmations: 'user_patients/confirmations' }
 
   resources :appointments do
     get :index_confirmed, on: :collection
@@ -12,8 +13,9 @@ Rails.application.routes.draw do
   root 'main#home'
 
   resources :user_patients do
-    get :vaccine_certificates, on: :collection
+    get   :vaccine_certificates, on: :collection
     patch :update_password, on: :member
-    get :edit_password, on: :member
+    get   :edit_password, on: :member
+    get   :welcome, on: :member
   end
 end
