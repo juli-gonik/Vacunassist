@@ -29,7 +29,7 @@ class AppointmentsController < ApplicationController
       redirect_to root_path, alert: 'Mayores de 60 no pueden acceder a la dosis'
     else
       Appointment.create(vaccine: 'fiebre_amarilla', status: 'pending', tipo: 'pedido', user_patient: current_user_patient)
-      current_user_patient.update_column(:fiebre_amarilla, true)
+      current_user_patient.appointments.update_column(:fiebre_amarilla, true)
     end
     redirect_to appointments_path, notice: 'Vacuna creada con exito'
   end
