@@ -1,9 +1,9 @@
 <%= render 'main/header'%>
 <div class="center-things">
   <div class="py-5 form-container" id='formContent'>
-    <h2>¿Olvidaste tu contraseña?</h2>
+    <h2>¿Olvidaste tu clave de vacunación?</h2>
 
-    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= form_for @user_patient, url: mandame_aquella_path, method: :post do |f| %>
 
       <div class="field text-start mt-3">
         <%= f.label :email %><br />
@@ -11,11 +11,8 @@
       </div>
 
       <div class="actions mt-4">
-        <%= f.submit "Enviar instrucciones de recuperar contraseña", class:'btn btn-success'%>
+        <%= f.submit "Enviar clave de vacunación", class:'btn btn-success'%>
       </div>
     <% end %>
-    <div class="d-flex ms-3 flex-column text-success">
-      <%= render "user_patients/shared/links" %>
-    </div>
   </div>
 </div>
