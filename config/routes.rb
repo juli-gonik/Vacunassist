@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :appointments do
     get :index_confirmed, on: :collection
-    get :index_given, on: :collection
+    get :index_past, on: :collection
     get :index_pending, on: :collection
   end
 
