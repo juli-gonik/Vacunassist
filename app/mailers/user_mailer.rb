@@ -1,10 +1,8 @@
 class UserMailer < ApplicationMailer
-    default from: 'notifications@example.com'
-  
-    def signup_check
-      @user = params[:user]
-      @url  = 'http://example.com/login'
-      mail (to: @user.email, subject: 'Clave de vacunacion: ' )
-    end
+  default from: 'vacunasis@example.com'
+
+  def reset_access_key
+    @user_patient = params[:user_patient]
+    mail(to: @user_patient.email, subject: 'Recuperar clave de vacunación')
   end
-  
+end

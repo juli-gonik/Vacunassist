@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 
   root 'main#home'
 
+  get '/reset_token', to: 'main#reset_token'
+  post '/mandame_aquella', to: 'main#mandame_aquella'
+
   resources :user_patients do
     get   :vaccine_certificates, on: :collection
     patch :update_password, on: :member
