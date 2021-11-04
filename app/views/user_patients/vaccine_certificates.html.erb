@@ -9,13 +9,26 @@
     <meta charset="utf-8"> 
 </head>
 <body>
-    <th> 
-        <h6>Se quien corresponda que quien corresponda que valida ante quien corresponda que</h6>
-        if(Appointments_patient.vaccine == 'covid')
-            <td><%=" el paciente #{@patient.name  @patient.last_name} registrado bajo el DNI  #{@patient.dni} posee turno para la dosis #{@Appointments_patient.dose} de #{@Appointments_patient.vaccine} para el día #{@Appointments_patient.date}"  %></td>
-        else
-            <td><%=" el paciente #{@patient.name @patient.last_name} registrado bajo el DNI  #{patient.dni} posee turno para la dosis de #{Appointments_patient.vaccine} para el día #{Appointments_patient.date} "  %></td>
-        end         
-    </th> 
+    <div class="center-things middle-card">
+      <div class="card mb-3" style="max-width: 1080px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <%=image_tag('vacunAssist.png', class: 'img-fluid rounded-start')%>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h2 class="card-title">Certificado</h2>
+              <h3 class="card-text mt-5">Se valida ante quien corresponda que</h3>
+              <%if(@appointment.vaccine == 'covid')%>
+                <h4 class="mt-5 card-text">El paciente <%=@patient.name%> <%=@patient.last_name%> registrado bajo el DNI  <%=@patient.dni%> fue vacunado para la dosis <%=@appointment.dose%> de <%=@appointment.vaccine%> el día <%=@appointment.date%></h4>
+              <%else%>
+                <h4 class="mt-5 card-text">El paciente <%=@patient.name%> <%=@patient.last_name%> registrado bajo el DNI  <%=@patient.dni%> fue vacunado para la dosis de <%=@appointment.vaccine%> el día <%=@appointment.date%></h4>
+              <%end%>  
+            </div>
+          </div>
+        </div>
+     </div>
+    </div>
 </body>
+
 </html>   
