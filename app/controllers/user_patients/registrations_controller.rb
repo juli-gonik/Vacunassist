@@ -10,13 +10,6 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     @covid = @user_patient.appointments.build(vaccine: 'covid', tipo: 0, status: 2)
   end
 
-  def new 
-    @appointment = appointment.new(vaccine:'fiebre_amarilla')
-  end
-
-  def create
-    @appointment = appoitment.new(vaccine: 'fiebre_amarilla')
-  end
 
   def create
     @user_patient = UserPatient.new(user_patient_params)
@@ -51,13 +44,6 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     user_patient.appointments.create(vaccine: 'gripe', tipo: 1, last_dose_date: @gripe.last_dose_date)
   end
 
-<<<<<<< HEAD
-  def new_fiebre_amarilla_appointment(user_patient)
-    @fiebre_amarilla = @user_patient.appointments.select { |appointment| appointment.vaccine == 'fiebre_amarilla' }.last
-    return unless user_patient.age < 60 && ...
-
-    user_patient.appointments.create(vaccine: 'fiebre_amarilla', tipo: 1, last_dose_date: @fiebre_amarilla.last_dose_date)
-=======
   def check_status(appointment)
     return unless appointment.tipo == 'sistema'
 
@@ -67,7 +53,6 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     when 'gripe'
       appointment.not_valid! if appointment.last_dose_date.nil?
     end
->>>>>>> master
   end
 
   def user_patient_params
