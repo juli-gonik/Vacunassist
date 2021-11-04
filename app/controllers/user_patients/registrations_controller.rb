@@ -6,16 +6,18 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
 
   def new
     @user_patient = UserPatient.new
-    @gripe = @user_patient.appointments.build(vaccine: 'gripe')
-    @covid = @user_patient.appointments.build(vaccine: 'covid')
+    @gripe = @user_patient.appointments.build(vaccine: 'gripe', tipo: 0, status: 2)
+    @covid = @user_patient.appointments.build(vaccine: 'covid', tipo: 0, status: 2)
   end
 
   def create
     @user_patient = UserPatient.new(user_patient_params)
+    @user_patient.access_key = SecureRandom.hex(4)
 
     if @user_patient.save
-
-      UserMailer.with(user: @user).email_check.deliver_later
+      @user_patient.appointments.each { |appointment| check_status(appointment) }
+      new_covid_appointment(@user_patient)
+      new_gripe_appointment(@user_patient)
       redirect_to root_path, notice: 'Registro exitoso, le llegará un correo para validar el email'
     else
       @gripe = @user_patient.appointments.select { |appointment| appointment.vaccine == 'gripe' }.first
@@ -26,19 +28,35 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
 
   private
 
+  def new_covid_appointment(user_patient)
+    @covid = @user_patient.appointments.select { |appointment| appointment.vaccine == 'covid' }.last
+    return unless user_patient.age >= 18 && @covid.dose < 2
+
+    dose = @covid.dose.zero? ? 1 : 2
+    user_patient.appointments.create(vaccine: 'covid', dose: dose, tipo: 1, last_dose_date: @covid.last_dose_date)
+  end
+
+  def new_gripe_appointment(user_patient)
+    @gripe = @user_patient.appointments.select { |appointment| appointment.vaccine == 'gripe' }.last
+    return unless @gripe.last_dose_date.present? && @gripe.last_dose_date < 1.year.ago
+
+    user_patient.appointments.create(vaccine: 'gripe', tipo: 1, last_dose_date: @gripe.last_dose_date)
+  end
+
+  def check_status(appointment)
+    return unless appointment.tipo == 'sistema'
+
+    case appointment.vaccine
+    when 'covid'
+      appointment.not_valid! if appointment.dose.zero?
+    when 'gripe'
+      appointment.not_valid! if appointment.last_dose_date.nil?
+    end
+  end
+
   def user_patient_params
     params.require(:user_patient).permit!
   end
-  # GET /resource/sign_up
-  # def new
-  #   super
-  # end
-
-  # POST /resource
-  # def create
-  #   super
-  # end
-
   # GET /resource/edit
   # def edit
   #   super

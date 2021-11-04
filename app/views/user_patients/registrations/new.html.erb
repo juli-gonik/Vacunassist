@@ -1,3 +1,4 @@
+<%= render 'main/header'%>
 <div class="container mb-5">
   <h1 class="my-5">Registrate para obtener tu vacuna</h1>
 
@@ -39,8 +40,11 @@
     <div class="row mb-4">
       <div class="col">
         <div class="form-outline mb-4">
-          <%= form.label 'zona', class: 'form-label' %>
-          <%= form.select(:zone, [['Municipalidad','municipalidad'],['Terminal','terminal'],['Cementerio','cementerio']], {}, { class:'form-select'}) %>
+          <%= form.label 'Elija donde será vacunado', class: 'form-label' %>
+          <%= form.select("vacunatorio_id", Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.id ] }, { include_blank: 'Vacunatorio  ' }, class:'form-select') %>
+          <% if form.object.errors[:vacunatorio].any? %>
+            <div class="text-danger"> <%= form.object.errors[:vacunatorio].to_sentence %> </div>
+          <% end %>
         </div>
       </div>
       <div class="col">
@@ -77,8 +81,10 @@
     <div class="row">
       <div class="col">
         <h3>Vacuna COVID</h3>
-          <%= form.fields_for :appointments, @covid do |appointment_fields| %>
+        <%= form.fields_for :appointments, @covid do |appointment_fields| %>
           <%= appointment_fields.hidden_field :vaccine, value: 'covid'%>
+          <%= appointment_fields.hidden_field :tipo, value: 'sistema'%>
+          <%= appointment_fields.hidden_field :status, value: 'past'%>
           <div class="row mb-4">
             <div class="col">
               <div class="form-outline">
@@ -97,7 +103,9 @@
       <div class="col">
         <h3>Vacuna Gripe</h3>
         <%= form.fields_for :appointments, @gripe do |appointment_fields| %>
-        <%= appointment_fields.hidden_field :vaccine, value: 'gripe'%>
+          <%= appointment_fields.hidden_field :vaccine, value: 'gripe'%>
+          <%= appointment_fields.hidden_field :tipo, value: 'sistema'%>
+          <%= appointment_fields.hidden_field :status, value: 'past'%>
           <div class="row mb-4">
             <div class="col">
               <div class="form-outline">
@@ -110,6 +118,6 @@
         <%end%>
       </div>
     </div>
-    <%=form.submit 'Registrarme', class:'btn btn-primary btn-block mb-4' %>
+    <%=form.submit 'Registrarme', class:'btn btn-success btn-block mb-4' %>
   <% end %>
 </div>

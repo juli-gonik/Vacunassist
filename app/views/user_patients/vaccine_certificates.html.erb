@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> 
+    <meta charset="utf-9"> 
+    <h1>CERTIFICADOS DE VACUNACIÓN</h1>
+    <h3>VACUNASSIST</h3>   
+</title>
+    <meta charset="utf-8"> 
+</head>
+<body>
+    <div class="center-things middle-card">
+      <div class="card mb-3" style="max-width: 1080px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <%=image_tag('vacunAssist.png', class: 'img-fluid rounded-start')%>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h2 class="card-title">Certificado</h2>
+              <h3 class="card-text mt-5">Se valida ante quien corresponda que</h3>
+              <%if(@appointment.vaccine == 'covid')%>
+                <h4 class="mt-5 card-text">El paciente <%=@patient.name%> <%=@patient.last_name%> registrado bajo el DNI  <%=@patient.dni%> fue vacunado para la dosis <%=@appointment.dose%> de <%=@appointment.vaccine%> el día <%=@appointment.date%></h4>
+              <%else%>
+                <h4 class="mt-5 card-text">El paciente <%=@patient.name%> <%=@patient.last_name%> registrado bajo el DNI  <%=@patient.dni%> fue vacunado para la dosis de <%=@appointment.vaccine%> el día <%=@appointment.date%></h4>
+              <%end%>  
+            </div>
+          </div>
+        </div>
+     </div>
+    </div>
+</body>
+
+</html>   

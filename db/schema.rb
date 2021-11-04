@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_141210) do
+ActiveRecord::Schema.define(version: 2021_11_04_132545) do
 
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 0
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_10_29_141210) do
     t.integer "user_patient_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "tipo"
     t.index ["user_patient_id"], name: "index_appointments_on_user_patient_id"
   end
 
@@ -37,11 +38,23 @@ ActiveRecord::Schema.define(version: 2021_10_29_141210) do
     t.integer "dni"
     t.string "access_key"
     t.datetime "birth_date"
-    t.integer "zone"
     t.boolean "risk_patient"
+    t.integer "vacunatorio_id"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["dni"], name: "index_users_on_dni", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["vacunatorio_id"], name: "index_users_on_vacunatorio_id"
   end
 
+  create_table "vacunatorios", force: :cascade do |t|
+    t.integer "zone"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "users", "vacunatorios"
 end
