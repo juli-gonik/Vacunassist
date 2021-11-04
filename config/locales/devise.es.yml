@@ -10,10 +10,10 @@ es:
       user_patient:
         already_authenticated: "Ya iniciaste sesión."
         inactive: "Tu cuenta no esta activada"
-        invalid: "Invalid %{authentication_keys} or password."
+        invalid: "Contraseña, clave de vacunación o email invalidos."
         locked: "Your account is locked."
         last_attempt: "You have one more attempt before your account is locked."
-        not_found_in_database: "Usuario no encontrado"
+        not_found_in_database: "Contraseña, clave de vacunación o email invalidos."
         timeout: "Your session expired. Please sign in again to continue."
         unauthenticated: "You need to sign in or sign up before continuing."
         unconfirmed: "You have to confirm your email address before continuing."

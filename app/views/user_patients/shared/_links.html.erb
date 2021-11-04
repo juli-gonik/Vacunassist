@@ -14,6 +14,8 @@
   <%= link_to "¿No recibiste mail de confirmación de cuenta?", new_confirmation_path(resource_name), class:'text-success' %><br />
 <% end %>
 
+<%= link_to 'Recuperar clave de vacunación', reset_token_path, class:'text-success' %>
+
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end %>
