@@ -5,5 +5,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :password, presence: true
+  validates :password, presence: true, on: :create
+  validates :password, confirmation: true, on: :create, unless: -> { password.blank? }
 end
