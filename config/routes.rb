@@ -3,6 +3,12 @@ Rails.application.routes.draw do
     registrations: 'user_patients/registrations',
     sessions:      'user_patients/sessions' }
 
+  resources :appointments do
+    get :index_confirmed, on: :collection
+    get :index_past, on: :collection
+    get :index_pending, on: :collection
+  end
+
   root 'main#home'
 
   resources :user_patients do

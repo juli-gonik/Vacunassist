@@ -18,3 +18,11 @@ es:
               confirmation:          'Las contraseñas deben coincidir'
             vacunatorio:
               required:              'Campo obligatorio'
+  date:
+    monday:                'Lunes'
+    tuesday:               'Martes'
+    wednesday:             'Miércoles'
+    thursday:              'Jueves'
+    friday:                'Viernes'
+    saturday:              'Sábado'
+    sunday:                'Domingo'
