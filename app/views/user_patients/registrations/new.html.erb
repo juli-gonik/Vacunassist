@@ -1,3 +1,4 @@
+<%= render 'main/header'%>
 <div class="container mb-5">
   <h1 class="my-5">Registrate para obtener tu vacuna</h1>
 
@@ -40,7 +41,7 @@
       <div class="col">
         <div class="form-outline mb-4">
           <%= form.label 'Elija donde será vacunado', class: 'form-label' %>
-          <%= form.select("vacunatorio_id", Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.id ] }, { include_blank: 'Vacunatorio  ' }, class:'form-control') %>
+          <%= form.select("vacunatorio_id", Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.id ] }, { include_blank: 'Vacunatorio  ' }, class:'form-select') %>
           <% if form.object.errors[:vacunatorio].any? %>
             <div class="text-danger"> <%= form.object.errors[:vacunatorio].to_sentence %> </div>
           <% end %>
@@ -117,6 +118,6 @@
         <%end%>
       </div>
     </div>
-    <%=form.submit 'Registrarme', class:'btn btn-primary btn-block mb-4' %>
+    <%=form.submit 'Registrarme', class:'btn btn-success btn-block mb-4' %>
   <% end %>
 </div>

@@ -13,5 +13,7 @@ Rails.application.routes.draw do
 
   resources :user_patients do
     get :vaccine_certificates, on: :collection
+    patch :update_password, on: :member
+    get :edit_password, on: :member
   end
-end 
+end
