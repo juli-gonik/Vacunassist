@@ -1,0 +1,22 @@
+<div class="container mb-5">
+  <h1 class="my-5">Vacuna fiebre amarilla</h1>
+
+  <%= form_for @appointment do |form| %>
+    <div class="row">
+      <div class="col">
+        <%= form.hidden_field :vaccine, value: 'fiebre_amarilla'%>
+        <%= form.hidden_field :tipo, value: 'pedido'%>
+        <%= form.hidden_field :status, value: 'pending'%>
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              <%= form.label 'Te has vacunado previamente', class: 'form-label' %>
+              <%= form.select(:fiebre_amarilla, [['Si',true], ['No',false]], {}, class:'form-select') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%=form.submit 'Pedir', class:'btn btn-success btn-block mb-4' %>
+  <% end %>
+</div>

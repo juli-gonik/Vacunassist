@@ -10,6 +10,7 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     @covid = @user_patient.appointments.build(vaccine: 'covid', tipo: 0, status: 2)
   end
 
+
   def create
     @user_patient = UserPatient.new(user_patient_params)
     @user_patient.access_key = SecureRandom.hex(4)
