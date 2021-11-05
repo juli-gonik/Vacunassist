@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <style>
+      h2 {
+        font-size: 2rem;
+      }
+      h3 {
+        font-size: 1.75rem;
+      }
+      h4 {
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-body" style="margin-top: 5rem;">
+      <div class="center-things middle-card">
+      <div class="card mb-3" style="max-width: 1080px;">
+        <div class="row g-0" style="display:flex; margin-top:100px;">
+          <div class="col-md-4" style="background-image: url(<%= asset_url('vacunAssist.png') %>); width:359px; height:359px; background-size: cover; float:left; margin-right:20px;">
+          </div>
+          <% appointment = Appointment.find(params[:appointment_id]) %>
+          <% patient = appointment.user_patient %>
+          <div class="col-md-8" style:"float:right;">
+            <div class="card-body">
+              <h2 style="color: green;" class="card-title">Certificado</h2>
+              <h3 class="card-text mt-5" style="margin-top:3rem;">Se valida ante quien corresponda que</h3>
+              <%if(appointment.vaccine == 'covid')%>
+                <h4 class="mt-5 card-text" style="margin-top:3rem;">El paciente <%=patient.name%> <%=patient.last_name%> registrado bajo el DNI  <%=patient.dni%> fue vacunado para la dosis <%=appointment.dose%> de <%=appointment.vaccine%> el día <%=appointment.date%></h4>
+              <%else%>
+                <h4 class="mt-5 card-text" style="margin-top:3rem;">El paciente <%=patient.name%> <%=patient.last_name%> registrado bajo el DNI  <%=patient.dni%> fue vacunado para la dosis de <%=appointment.vaccine%> el día <%=appointment.date%></h4>
+              <%end%>  
+            </div>
+          </div>
+        </div>
+     </div>
+    </div>
+  </body>
+</html>

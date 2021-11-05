@@ -30,7 +30,7 @@
        <div class="col">
         <div class="form-outline mb-4">
           <%= form.label 'Elija donde será vacunado', class: 'form-label' %>
-          <%= form.select("vacunatorio_id", Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.id ] }, { include_blank: 'Vacunatorio  ' }, class:'form-control') %>
+          <%= form.select("vacunatorio_id", Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.id ] }, { include_blank: 'Vacunatorio' }, class:'form-select') %>
           <% if form.object.errors[:vacunatorio].any? %>
             <div class="text-danger"> <%= form.object.errors[:vacunatorio].to_sentence %> </div>
           <% end %>
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <!-- Text input -->
+    <!-- 
     <div class="row mb-4">
       <div class="col">
         <div class="form-outline">
@@ -54,6 +54,7 @@
         </div>
       </div>
     </div>
+       -->
     <%=form.submit 'Guardar', class:'btn btn-success btn-block my-4' %>
   <% end %>
 </div>

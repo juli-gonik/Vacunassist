@@ -3,6 +3,20 @@ class UserPatientsController < ApplicationController
   def vaccine_certificates
     @patient     = current_user_patient
     @appointment = Appointment.find(params[:appointment_id])
+    respond_to do |format|
+      format.pdf do
+        render        template:                       'user_patients/vaccine_certificates.pdf.erb',
+                      layout:                         'pdf.html',
+                      pdf:                            "Certificado-#{@patient.last_name}",
+                      orientation:                    'Landscape',
+                      title:                          "Certificado",
+                      encoding:                       "UTF-8",
+                      page_size:                      "A4",
+                      viewport_size:                  '1280x1024',
+                      disposition:                    'attachment'
+      end
+      format.html
+    end
   end
 
   def show; end

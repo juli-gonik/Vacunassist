@@ -13,7 +13,9 @@ class MainController < ApplicationController
       UserMailer.with(user_patient: @user_patient).reset_access_key.deliver_now
       redirect_to root_path, notice: 'Token enviado'
     else
-      redirect_to root_path, alert: 'Hubo un error'
+      @user_patient = UserPatient.new
+      @user_patient.errors.add(:email, :not_found)
+      render :reset_token
     end
   end
 end
