@@ -15,6 +15,9 @@
               <%= button_to 'Cerrar sesion', destroy_user_patient_session_path, method: :delete, class:'nav-link boton'%>
             </li>
             <li class="nav-item">
+              <%= link_to "Solicitar turno de fiebre amarilla", new_appointment_path, class:'nav-link' %>
+            </li>
+            <li class="nav-item">
               <%= link_to "Mis turnos", appointments_path, class:'nav-link' %>
             </li>
             <li class="nav-item">
