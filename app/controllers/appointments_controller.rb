@@ -21,17 +21,19 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    @appointment = Appointment.new(vaccine: 'fiebre_amarilla')
+    @appointment = Appointment.new(params_appointment)
 
     if current_user_patient.age > 60
-      redirect_to root_path, alert: 'Solo se puede dar una vez '
-    elsif @appointment.fiebre_amarilla 
       redirect_to root_path, alert: 'Mayores de 60 no pueden acceder a la dosis'
+    elsif @appointment.fiebre_amarilla
+      redirect_to root_path, alert: 'Solo se puede vacunar una vez'
     else
       Appointment.create(vaccine: 'fiebre_amarilla', status: 'pending', tipo: 'pedido', user_patient: current_user_patient)
-      current_user_patient.appointments.update_column(:fiebre_amarilla, true)
+      redirect_to appointments_path, notice: 'Vacuna creada con exito'
     end
-    redirect_to appointments_path, notice: 'Vacuna creada con exito'
   end
 
+  def params_appointment
+    params.require(:appointment).permit!
+  end
 end
