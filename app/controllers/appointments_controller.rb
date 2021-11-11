@@ -15,7 +15,6 @@ class AppointmentsController < ApplicationController
     @appointments = current_user_patient.appointments.past
   end
 
-  
   def new
     @appointment = Appointment.new(vaccine: 'fiebre_amarilla')
   end

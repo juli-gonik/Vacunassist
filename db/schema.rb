@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_05_121435) do
+ActiveRecord::Schema.define(version: 2021_11_10_214541) do
 
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 0
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2021_11_05_121435) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.boolean "fiebre_amarilla"
+    t.string "type"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["dni"], name: "index_users_on_dni", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

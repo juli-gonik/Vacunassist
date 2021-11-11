@@ -10,15 +10,15 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     @covid = @user_patient.appointments.build(vaccine: 'covid', tipo: 0, status: 2)
   end
 
-
   def create
     @user_patient = UserPatient.new(user_patient_params)
     @user_patient.access_key = SecureRandom.hex(4)
 
-    if @user_patient.save
+    if @user_patient.valid?
+      @user_patient.appointments.each { |appointment| check_status(appointment) }
+      @user_patient.save
       new_covid_appointment(@user_patient)
       new_gripe_appointment(@user_patient)
-      @user_patient.appointments.each { |appointment| check_status(appointment) }
       redirect_to root_path, notice: 'Registro exitoso, le llegará un correo para validar el email'
     else
       @gripe = @user_patient.appointments.select { |appointment| appointment.vaccine == 'gripe' }.first
@@ -40,7 +40,7 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
 
   def new_gripe_appointment(user_patient)
     @gripe = @user_patient.appointments.select { |appointment| appointment.vaccine == 'gripe' }.last
-    if @gripe_last_dose_date
+    if @gripe.last_dose_date.present?
       if @gripe.last_dose_date < 1.year.ago
         user_patient.appointments.create(vaccine: 'gripe', tipo: 1, last_dose_date: @gripe.last_dose_date)
       end
@@ -54,9 +54,9 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
 
     case appointment.vaccine
     when 'covid'
-      appointment.not_valid! if appointment.dose.zero? || appointment.user_patient.age <= 18
+      appointment.destroy if appointment.dose.zero? || appointment.user_patient.age <= 18
     when 'gripe'
-      appointment.not_valid! if appointment.last_dose_date.nil?
+      appointment.destroy if appointment.last_dose_date.nil?
     end
   end
 
