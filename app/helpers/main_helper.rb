@@ -42,4 +42,10 @@ module MainHelper
 
     '-'
   end
+
+  def link_header(title, url)
+    link_to url, class: 'nav-link text-success' do
+      tag.span title, class: "#{'selected_tab' if current_page?(url)}"
+    end
+  end
 end

@@ -27,6 +27,9 @@
             </li>
           <% else %>
             <li class="nav-item">
+              <%= link_to "Soy vacunador", new_user_vacunator_session_path, class:'nav-link' %>
+            </li>
+            <li class="nav-item">
               <%= link_to "Ingresar", new_user_patient_session_path, class:'nav-link' %>
             </li>
             <li class="nav-item">

@@ -4,6 +4,11 @@ Rails.application.routes.draw do
     sessions:      'user_patients/sessions',
     confirmations: 'user_patients/confirmations' }
 
+  devise_for :user_vacunators, controllers: {
+    registrations: 'user_vacunators/registrations',
+    sessions:      'user_vacunators/sessions',
+    confirmations: 'user_vacunators/confirmations' }
+
   resources :appointments do
     get :index_confirmed, on: :collection
     get :index_past, on: :collection
