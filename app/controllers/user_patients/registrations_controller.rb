@@ -35,15 +35,13 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     return unless user_patient.age >= 18 && @covid.dose < 2
 
     dose = @covid.dose.zero? ? 1 : 2
-    user_patient.appointments.create(vaccine: 'covid', dose: dose, tipo: 1, last_dose_date: @covid.last_dose_date)
+    user_patient.appointments.create(vaccine: 'covid', dose: dose, tipo: 1, date: @covid.date)
   end
 
   def new_gripe_appointment(user_patient)
     @gripe = @user_patient.appointments.select { |appointment| appointment.vaccine == 'gripe' }.last
-    if @gripe.last_dose_date.present?
-      if @gripe.last_dose_date < 1.year.ago
-        user_patient.appointments.create(vaccine: 'gripe', tipo: 1, last_dose_date: @gripe.last_dose_date)
-      end
+    if @gripe.date.present?
+      user_patient.appointments.create(vaccine: 'gripe', tipo: 1, date: @gripe.date) if @gripe.date < 1.year.ago
     else
       user_patient.appointments.create(vaccine: 'gripe', tipo: 1)
     end
@@ -56,7 +54,7 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     when 'covid'
       appointment.destroy if appointment.dose.zero? || appointment.user_patient.age <= 18
     when 'gripe'
-      appointment.destroy if appointment.last_dose_date.nil?
+      appointment.destroy if appointment.date.nil?
     end
   end
 

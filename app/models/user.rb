@@ -9,4 +9,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
+  before_save :format_name
+
+  private
+
+  def format_name
+    self.name = name.capitalize
+    self.last_name = last_name.capitalize
+  end
 end

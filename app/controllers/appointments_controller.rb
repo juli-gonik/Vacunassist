@@ -1,18 +1,18 @@
 class AppointmentsController < ApplicationController
   def index
-    @appointments = current_user_patient.appointments
+    @appointments = current_user_patient.appointments.pedido
   end
 
   def index_pending
-    @appointments = current_user_patient.appointments.pending
+    @appointments = current_user_patient.appointments.pending.pedido
   end
 
   def index_confirmed
-    @appointments = current_user_patient.appointments.confirmed
+    @appointments = current_user_patient.appointments.confirmed.pedido
   end
 
   def index_past
-    @appointments = current_user_patient.appointments.past
+    @appointments = current_user_patient.appointments.past.pedido
   end
 
   def new

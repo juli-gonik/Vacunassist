@@ -67,6 +67,34 @@
       </div>
       <hr>
       <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Fecha última dosis gripe:</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%= last_appointment_date(@user_patient.appointments.gripe.past.last)%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Fecha última dosis covid:</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%= last_appointment_date(@user_patient.appointments.covid.past&.last)%>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Ultima dosis covid:</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <%= last_appointment_dosis(@user_patient.appointments.covid.past&.last) %>
+        </div>
+      </div>
+      <hr>
+      
+      <div class="row">
         <div class="col-sm-12">
           <%= link_to 'Editar', edit_user_patient_path(@user_patient), class:'btn btn-success'%>
           <%= link_to 'Editar contraseña', edit_password_user_patient_path(@user_patient), class:'btn btn-success ms-4'%>
