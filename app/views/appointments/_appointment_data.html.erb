@@ -1,0 +1,13 @@
+<div class="card-shadow d-flex flex-column justify-content-start align-items-start p-4 gap-2 my-5" style="background:#f8f9fa;">
+  <h2 class="badge bg-success"> <%= appointment.vaccine == 'fiebre_amarilla' ? 'Fiebre amarilla' : appointment.vaccine.capitalize %></h2>
+  <% if appointment.vaccine == 'covid' %>
+    <h6><i class="fas fa-syringe"></i>Dosis: <%= appointment.dose %></h6>
+  <% end %>
+  <h6><i class="fas fa-map-marker-alt"></i> Zona:  <%= appointment.tipo == 'sistema' ? '-' : appointment.user_patient.vacunatorio.zone.capitalize %></h6>
+  <% user_patient = appointment.user_patient %>
+  <h6><i class="fas fa-user-injured"></i> Paciente: <%= "#{user_patient.name} #{user_patient.last_name}" %></h6>
+  <h6 class="d-flex justify-content-between w-100">
+    <span><i class="fas fa-id-card"></i>  DNI: <%= user_patient.dni %></span>
+    <%= link_to 'Completar planilla', new_certificate_path(appointment: appointment), class: 'text-success text-decoration-none' %>
+  </h6>
+</div>

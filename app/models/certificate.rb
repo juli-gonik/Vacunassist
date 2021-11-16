@@ -6,4 +6,8 @@ class Certificate < ApplicationRecord
     gripe: 1,
     fiebre_amarilla: 2
   }
+
+  validates :observations, presence: true
+  validates :vaccine, presence: true
+  validates :dose, presence: true, if: -> { vaccine == 'covid' }
 end

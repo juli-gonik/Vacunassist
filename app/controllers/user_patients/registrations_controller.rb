@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class UserPatients::RegistrationsController < Devise::RegistrationsController
   include MainHelper
-  # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
 
   def new
     @user_patient = UserPatient.new
