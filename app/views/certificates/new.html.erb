@@ -8,6 +8,7 @@
   </div>
   <%= form_with model: @certificate do |form| %>
     <div class="row mb-4">
+    <%= form.hidden_field :appointment_id, value: @appointment.id%>
       <div class="col">
         <div class="form-outline">
           <%= form.label 'Observaciones', class: 'form-label' %>

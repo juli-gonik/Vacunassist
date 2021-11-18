@@ -20,12 +20,9 @@ class AppointmentsController < ApplicationController
   def vacunator_index
     vacunatorio = actual_user.vacunatorio
     @appointments = Appointment.joins(:user_patient)
-                               .where(date: Date.today)
+                               .where(date: DateTime.current.midnight)
                                .pedido
                                .where(user_patient: { vacunatorio: vacunatorio })
-    # @appointments  = []
-    # @user_patients = UserPatient.all
-    # @appointments << @user_patients.each { |up| up.appointments.where(date: Date.today) }
   end
 
   def new

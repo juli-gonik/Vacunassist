@@ -1,11 +1,11 @@
 class CertificatesController < ApplicationController
-  
   def new
     @appointment = Appointment.find(params[:appointment])
     @certificate = Certificate.new(appointment: @appointment)
   end
 
   def create
+    @appointment = Appointment.find(params_certificate[:appointment_id])
     @certificate = Certificate.new(params_certificate)
 
     if @certificate.save

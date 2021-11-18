@@ -1,5 +1,18 @@
 <%= render 'main/header' %>
 <div class="container mt-5">
   <h3>Numero de pacientes de hoy: <%= @appointments.count %></h3>
-  <%= render partial: 'appointment_data', collection: @appointments, as: :appointment %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Paciente</th>
+        <th scope="col">DNI</th>
+        <th scope="col">Vacuna</th>
+        <th scope="col">Dosis</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    <%= render partial: 'appointment_data', collection: @appointments, as: :appointment %>
+    </tbody>
+  </table>
 </div>
