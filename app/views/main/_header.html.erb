@@ -35,6 +35,9 @@
             <li class="nav-item">
               <%= link_to 'Mis Datos', user_vacunator_path(current_user_vacunator), class:'nav-link'%>
             </li>
+            <li class="nav-item">
+              <%= link_to 'Registrar paciente', new_partial_user_patients_path, class:'nav-link'%>
+            </li>
           <% else %>
             <li class="nav-item">
               <%= link_to "Soy vacunador", new_user_vacunator_session_path, class:'nav-link' %>

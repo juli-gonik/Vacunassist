@@ -37,6 +37,26 @@ class UserPatientsController < ApplicationController
 
   def edit_password; end
 
+  def new_partial
+    @user_patient = UserPatient.new
+  end
+
+  def create_partial
+    @user_patient = UserPatient.new(user_patient_params)
+    @user_patient.access_key = SecureRandom.hex(4)
+    sixty?(@user_patient)
+    @user_patient.vacunatorio = actual_user.vacunatorio
+    @user_patient.password = @user_patient.dni
+    @user_patient.password_confirmation = @user_patient.dni
+  
+    if @user_patient.save
+      create_fiebre_amarilla(@user_patient)
+      redirect_to root_path, notice: 'Registro exitoso, le llegará un correo para validar el email'
+    else
+      render :new_partial
+    end
+  end
+
   def update_password
     @user_patient = current_user_patient
     redirect_to @user_patient and return if params.dig(:user_patient, :password).blank? && params.dig(:user_patient, :current_password).blank?
@@ -52,6 +72,20 @@ class UserPatientsController < ApplicationController
 
   private
 
+  def create_fiebre_amarilla(user_patient)
+    Appointment.create(
+      vaccine: 2,
+      status: 1,
+      tipo: 1,
+      date: Date.today,
+     user_patient: user_patient
+    )
+  end
+
+  def sixty?(user_patient)
+    errors.add(:birth_date, 'No puede ser mayor de 60 para recibir vacuna de fiebre amarilla') if user_patient.age >= 60
+  end
+
   def user_patient_without_password_params
     params.require(:user_patient).permit(:name, :last_name, :vacunatorio_id, :dni, :risk_patient, :birth_date)
   end
@@ -63,4 +97,5 @@ class UserPatientsController < ApplicationController
   def set_user_patient
     @user_patient = UserPatient.find(params[:id])
   end
+
 end

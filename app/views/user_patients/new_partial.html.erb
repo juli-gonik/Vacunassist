@@ -1,0 +1,55 @@
+<%= render 'main/header'%>
+<div class="container mb-5">
+  <h1 class="my-5">Registro parcial</h1>
+
+  <h2 class="my-5">Datos personales</h2>
+
+  <%= form_with model: @user_patient, method: :create, url: create_partial_user_patients_path, scope: :user_patient do |form| %>
+    <!-- 2 column grid layout with text inputs for the first and last names -->
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline">
+            <%= form.label 'Nombre', class: 'form-label' %>
+            <%= form.text_field :name, class:'form-control'%>
+        </div>
+
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Apellido', class: 'form-label' %>
+          <%= form.text_field :last_name, class:'form-control'%>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline">
+            <%= form.label 'DNI', class: 'form-label' %>
+            <%= form.text_field :dni, class:'form-control'%>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Email', class: 'form-label' %>
+          <%= form.text_field :email, class:'form-control'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Fecha de nacimiento', class: 'form-label' %>
+          <br>
+          <%= form.date_field :birth_date, data_provide: 'datepicker', class: 'datepicker' %>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Text input -->
+    
+  
+    <%=form.submit 'Registrarme', class:'btn btn-success btn-block mb-4' %>
+  <% end %>
+</div>
+

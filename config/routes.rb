@@ -23,15 +23,19 @@ Rails.application.routes.draw do
   get '/reset_token', to: 'main#reset_token'
   post '/mandame_aquella', to: 'main#mandame_aquella'
 
+  
+
+  resources :user_vacunators do
+    patch :update_password, on: :member
+    get   :edit_password, on: :member
+  end
+
   resources :user_patients do
     get   :vaccine_certificates, on: :collection
     patch :update_password, on: :member
     get   :edit_password, on: :member
     get   :welcome, on: :member
-  end
-
-  resources :user_vacunators do
-    patch :update_password, on: :member
-    get   :edit_password, on: :member
+   get :new_partial, on: :collection
+   post :create_partial, on: :collection
   end
 end
