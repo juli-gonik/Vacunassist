@@ -56,3 +56,6 @@ puts 'pass: vacunador2@vacunatorio.com '
 puts '-----Cementerio------'
 puts 'email: vacunador3@vacunatorio.com '
 puts 'pass: vacunador3@vacunatorio.com '
+
+puts 'creando Usuarios pacientes'
+
