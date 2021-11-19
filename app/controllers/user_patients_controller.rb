@@ -1,5 +1,7 @@
 class UserPatientsController < ApplicationController
-  before_action :set_user_patient, only: [:edit, :update, :show, :edit_password, :update_password]
+  before_action :set_user_patient, only: [:edit, :update, :show, :edit_password, :update_password, :complete_profile, :handle_complete_profile]
+  before_action :complete_profile
+  skip_before_action :complete_profile, only: [:complete_profile, :handle_complete_profile]
   def vaccine_certificates
     @patient     = current_user_patient
     @appointment = Appointment.find(params[:appointment_id])
@@ -48,6 +50,7 @@ class UserPatientsController < ApplicationController
     @user_patient.vacunatorio = actual_user.vacunatorio
     @user_patient.password = @user_patient.dni
     @user_patient.password_confirmation = @user_patient.dni
+    @user_patient.first_sign_in = true
   
     if @user_patient.save
       create_fiebre_amarilla(@user_patient)
@@ -68,6 +71,18 @@ class UserPatientsController < ApplicationController
     else
       render :edit_password
     end
+  end
+
+  def complete_profile; end
+
+  def handle_complete_profile
+    if @user_patient.update(user_patient_params)
+      @user_patient.update(first_sign_in: false)
+      redirect_to @user_patient, notice: 'Datos actualizados con exito'
+    else
+      render :complete_profile
+    end
+
   end
 
   private
@@ -98,4 +113,10 @@ class UserPatientsController < ApplicationController
     @user_patient = UserPatient.find(params[:id])
   end
 
+  def complete_profile
+    return if params[:action] == 'destroy'
+    if actual_user_signed_in? && actual_user.instance_of?(UserPatient)
+      redirect_to complete_profile_user_patient_path(actual_user) if actual_user.first_sign_in
+    end 
+  end 
 end

@@ -1,7 +1,7 @@
 class UserPatient < User
   validates :birth_date, :dni, presence: true
-  #validates :risk_patient, inclusion: [true, false], unless: -> { current_user_vacunator }
-  #validates :risk_patient, exclusion: [nil], unless: -> { current_user_vacunator }
+  validates :risk_patient, inclusion: [true, false]
+  validates :risk_patient, exclusion: [nil]
   validates :dni, uniqueness: true
   validates :dni, numericality: { only_integer: true, greater_than_or_equal_to: 1_000_000, allow_blank: true }
 

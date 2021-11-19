@@ -35,7 +35,9 @@ Rails.application.routes.draw do
     patch :update_password, on: :member
     get   :edit_password, on: :member
     get   :welcome, on: :member
-   get :new_partial, on: :collection
-   post :create_partial, on: :collection
+    get :new_partial, on: :collection
+    post :create_partial, on: :collection
+    get :complete_profile, on: :member
+    patch :handle_complete_profile, on: :member
   end
 end
