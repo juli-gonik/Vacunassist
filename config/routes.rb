@@ -29,4 +29,9 @@ Rails.application.routes.draw do
     get   :edit_password, on: :member
     get   :welcome, on: :member
   end
+
+  resources :user_vacunators do
+    patch :update_password, on: :member
+    get   :edit_password, on: :member
+  end
 end
