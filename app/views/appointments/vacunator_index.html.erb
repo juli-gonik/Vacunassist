@@ -1,13 +1,20 @@
 <%= render 'main/header' %>
 <div class="container mt-5">
-  <h3>Numero de pacientes de hoy: <%= @appointments.count %></h3>
-  <table class="table">
+  <h3 class="d-flex justify-content-between mb-5">
+    <span>Numero de pacientes de hoy: <%= @appointments.count %></span>
+    <%= link_to "Reprogramar turnos no atendidos", reprogramar_turnos_appointments_path, class: 'btn btn-success' %>
+  </h3>
+  <h3 class="mb-5">Zona: <%= @actual_user.vacunatorio.zone.capitalize%></h3>
+
+  
+  <table class="table table-bordered border-success card-shadow mt-5">
     <thead>
       <tr>
         <th scope="col">Paciente</th>
         <th scope="col">DNI</th>
         <th scope="col">Vacuna</th>
         <th scope="col">Dosis</th>
+        <th scope="col">Estado</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
@@ -15,4 +22,7 @@
     <%= render partial: 'appointment_data', collection: @appointments, as: :appointment %>
     </tbody>
   </table>
+  <div class="digg_pagination d-flex justify-content-center mb-5 mt-4">
+    <%= will_paginate @appointments, previous_label: 'Anterior', next_label: 'Siguiente' %>
+  </div>
 </div>

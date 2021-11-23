@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get :index_past, on: :collection
     get :index_pending, on: :collection
     get :vacunator_index, on: :collection
+    get :reprogramar_turnos, on: :collection
   end
 
   resources :certificates
