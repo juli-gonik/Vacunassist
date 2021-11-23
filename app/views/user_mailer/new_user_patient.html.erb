@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Bienvenido a Vacunasis, <%= @user_patient.name %></h3>
+    <p>
+      Te han registrado de forma parcial
+    </p>
+
+    <h4>Tus datos son los siguientes:</h4> 
+    <p>
+        -Usuario: <%= @user_patient.email %>.
+        <br>
+        -Contraseña: <%= @user_patient.password %>
+        <br>
+        -Clave de vacunacion: <%= @user_patient.access_key %><br>
+    </p> 
+        
+    <p>
+      Confirmá tu cuenta para poder descargar tu certificado, completar tus datos y pedir nuevos turnos.
+      <p><%= link_to 'Confirmar mi cuenta', confirmation_url(@user_patient, confirmation_token: @user_patient.confirmation_token) %></p>
+    </p>
+  </body>
+</html>

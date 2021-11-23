@@ -31,6 +31,11 @@ class UserPatients::ConfirmationsController < Devise::ConfirmationsController
 
   def after_confirmation_path_for(resource_name, resource)
     sign_in(resource) # In case you want to sign in the user
-    welcome_user_patient_path(resource)
+    if resource&.first_sign_in
+      flash[:notice] = 'Cuenta confirmada con exito'
+      complete_profile_user_patient_path(actual_user)
+    else
+      welcome_user_patient_path(resource)
+    end
   end
 end

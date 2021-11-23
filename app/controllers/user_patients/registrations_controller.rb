@@ -25,8 +25,6 @@ class UserPatients::RegistrationsController < Devise::RegistrationsController
     end
   end
 
- 
-
   private
 
   def new_covid_appointment(user_patient)
