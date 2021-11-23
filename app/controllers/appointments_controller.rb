@@ -23,6 +23,21 @@ class AppointmentsController < ApplicationController
                                .where(date: DateTime.current.midnight)
                                .pedido
                                .where(user_patient: { vacunatorio: vacunatorio })
+    @appointments = @appointments.paginate(page: params[:page], per_page: 15)
+
+  end
+
+  def reprogramar_turnos
+    vacunatorio = actual_user.vacunatorio
+    @appointments = Appointment.joins(:user_patient)
+                               .where(date: DateTime.current.midnight)
+                               .pedido
+                               .where(user_patient: { vacunatorio: vacunatorio })
+                               .where.not(status: :past)
+    @appointments.each do |appointment|
+      reschedule_appointment(appointment)
+    end
+    redirect_to vacunator_index_appointments_path
   end
 
   def new
@@ -43,6 +58,17 @@ class AppointmentsController < ApplicationController
   end
 
   private
+
+  def reschedule_appointment(appointment)
+    Appointment.create(
+      dose: appointment.dose,
+      vaccine: appointment.vaccine,
+      tipo: appointment.tipo,
+      status: :pending,
+      user_patient: appointment.user_patient
+    )
+    appointment.destroy
+  end
 
   def params_appointment
     params.require(:appointment).permit!
