@@ -16,7 +16,7 @@ es:
         not_found_in_database: "Contraseña, clave de vacunación o email invalidos."
         timeout: "Your session expired. Please sign in again to continue."
         unauthenticated: "You need to sign in or sign up before continuing."
-        unconfirmed: "You have to confirm your email address before continuing."
+        unconfirmed: "Confirma tu email antes de iniciiar sesión"
       user_vacunator:
         invalid: "Cuenta no validada."
     mailer:

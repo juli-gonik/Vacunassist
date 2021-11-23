@@ -1,0 +1,33 @@
+ <%= form_with model: certificate do |form| %>
+    <div class="row mb-4">
+    <%= form.hidden_field :appointment_id, value: @appointment.id%>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Observaciones', class: 'form-label' %>
+          <%= form.text_area :observations, class:'form-control'%>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <%= form.label 'Vacuna: ', class: 'form-label' %>
+        <%= @appointment.vaccine.capitalize %>
+        <%= form.hidden_field :vaccine, value: @appointment.vaccine%>
+        <%#= form.select("vaccine", Certificate.vaccines.keys, { include_blank: 'Vacuna' }, class:'form-select') %>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Dosis (Solo si es covid): ', class: 'form-label' %>
+          <%= @appointment.dose %>
+          <%= form.hidden_field :dose, value: @appointment.dose%>
+          <%#= form.select(:dose, [0,1,2], {}, class:'form-select') %>
+        </div>
+      </div>
+    </div>
+    <%=form.submit 'Completar', class:'btn btn-success btn-block mb-4' %>
+  <% end %>
+
+Una hoja por resolucion por profesional, 
+crear resolucion, luego autorizacion, luego prestacion y luego factura.
