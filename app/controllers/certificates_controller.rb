@@ -1,5 +1,5 @@
 class CertificatesController < ApplicationController
-  before_action :set_certificate, only: [:edit, :update]
+  before_action :set_certificate, only: [:edit, :update, :render_certificate]
   def new
     @appointment = Appointment.find(params[:appointment])
     @certificate = Certificate.new(appointment: @appointment)
@@ -27,6 +27,25 @@ class CertificatesController < ApplicationController
       redirect_to vacunator_index_appointments_path, notice: 'Datos actualizados con exito'
     else
       render :edit
+    end
+  end
+
+  def render_certificate
+    @appointment = @certificate.appointment
+    @user_patient = @appointment.user_patient
+    respond_to do |format|
+      format.pdf do
+      render        template:                       'certificates/render_certificate.pdf.erb',
+                    layout:                         'pdf.html',
+                    pdf:                            "Certificado-#{@user_patient.last_name}",
+                    orientation:                    'Landscape',
+                    title:                          "Certificado",
+                    encoding:                       "UTF-8",
+                    page_size:                      "A4",
+                    viewport_size:                  '1280x1024',
+                    disposition:                    'attachment'
+      end
+      format.html
     end
   end
 

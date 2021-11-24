@@ -17,26 +17,27 @@
     </style>
 </head>
 <body>
-    <div class="center-things middle-card">
+    <div class="middle-card center-things">
       <div class="card mb-3" style="max-width: 1080px;">
         <div class="row g-0">
           <div class="col-md-4">
             <%=image_tag('vacunAssist.png', class: 'img-fluid rounded-start')%>
-
           </div>
-          <% appointment = Appointment.find(params[:appointment_id]) %>
+          <% certificate = Certificate.find(params[:id]) %>
+          <% appointment = certificate.appointment %>
           <% patient = appointment.user_patient %>
           <div class="col-md-8">
             <div class="card-body">
               <h2 style="color: green;" class="card-title">Certificado</h2>
               <h3 class="card-text mt-5">Se valida ante quien corresponda que</h3>
               <%if(appointment.vaccine == 'covid')%>
-                <h4 class="mt-5 card-text">El paciente <%=patient.name%> <%=patient.last_name%> registrado bajo el DNI  <%=patient.dni%> fue vacunado para la dosis <%=appointment.dose%> de <%=appointment.vaccine%> el día <%=appointment.date%></h4>
+                <h4 class="mt-5 card-text">El paciente <%=patient.name%> <%=patient.last_name%> registrado bajo el DNI  <%=patient.dni%> fue vacunado para la dosis <%=appointment.dose%> de <%=pretty_vaccine appointment.vaccine%> el día <%=appointment.date.strftime("%d/%m/%Y")%></h4>
               <%else%>
-                <h4 class="mt-5 card-text">El paciente <%=patient.name%> <%=patient.last_name%> registrado bajo el DNI  <%=patient.dni%> fue vacunado para la dosis de <%=appointment.vaccine%> el día <%=appointment.date%></h4>
+                <h4 class="mt-5 card-text">El paciente <%=patient.name%> <%=patient.last_name%> registrado bajo el DNI  <%=patient.dni%> fue vacunado para la dosis de <%=pretty_vaccine appointment.vaccine%> el día <%=appointment.date.strftime("%d/%m/%Y")%></h4>
               <%end%>  
             </div>
           </div>
+          <h4 class="mt-5 card-text" style="margin-top:3rem;"> Observaciones: <%= certificate.observations%></h4>
         </div>
      </div>
     </div>

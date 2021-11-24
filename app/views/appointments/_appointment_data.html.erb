@@ -8,6 +8,9 @@
   <% if appointment.certificate.blank? %>
     <td><%= link_to 'Completar planilla', new_certificate_path(appointment: appointment), class: 'btn btn-success'%></td>
   <% else %>
-    <td><%= link_to 'Editar planilla', edit_certificate_path(appointment.certificate, appointment: appointment), class: 'btn btn-dark'%></td>
+    <td>
+      <%= link_to 'Editar planilla', edit_certificate_path(appointment.certificate, appointment: appointment), class: 'btn btn-dark'%>
+      <%= link_to 'Descagar certificado', render_certificate_certificate_path(appointment.certificate, format: :pdf), class: 'btn btn-success'%>
+    </td>
   <% end %>
 </tr>

@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     get :reprogramar_turnos, on: :collection
   end
 
-  resources :certificates
+  resources :certificates do
+    get :render_certificate, on: :member
+  end
 
   root 'main#home'
 
