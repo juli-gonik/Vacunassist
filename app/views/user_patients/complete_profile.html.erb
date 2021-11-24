@@ -1,0 +1,108 @@
+<%= render 'main/header'%>
+<div class="container mb-5">
+  <h1 class="my-5">Terminá de registrarte</h1>
+
+  <h2 class="my-5">Datos personales</h2>
+
+  <%= form_with model: @user_patient, url: handle_complete_profile_user_patient_path(@user_patient), method: :patch do |form| %>
+    <!-- 2 column grid layout with text inputs for the first and last names -->
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline">
+            <%= form.label 'Nombre', class: 'form-label' %>
+            <%= form.text_field :name, class:'form-control'%>
+        </div>
+
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Apellido', class: 'form-label' %>
+          <%= form.text_field :last_name, class:'form-control'%>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline">
+            <%= form.label 'DNI', class: 'form-label' %>
+            <%= form.text_field :dni, class:'form-control'%>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Email', class: 'form-label' %>
+          <%= form.text_field :email, class:'form-control'%>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text input -->
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline mb-4">
+          <%= form.label 'Elija donde será vacunado', class: 'form-label' %>
+          <%= form.select("vacunatorio_id", Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.id ] }, { include_blank: 'Vacunatorio  ' }, class:'form-select') %>
+          <% if form.object.errors[:vacunatorio].any? %>
+            <div class="text-danger"> <%= form.object.errors[:vacunatorio].to_sentence %> </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label '¿Paciente de riesgo?', class: 'form-label' %>
+          <%= form.select :risk_patient, [['Si',true], ['No',false]], {}, { class:'form-select'} %>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Fecha de nacimiento', class: 'form-label' %>
+          <br>
+          <%= form.date_field :birth_date, data_provide: 'datepicker', class: 'datepicker' %>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="my-4 row">Datos de vacunas</h2>
+    <div class="row">
+      <div class="col">
+        <h3>Vacuna COVID</h3>
+        <%= form.fields_for :appointments, @covid do |appointment_fields| %>
+          <%= appointment_fields.hidden_field :vaccine, value: 'covid'%>
+          <%= appointment_fields.hidden_field :tipo, value: 'sistema'%>
+          <%= appointment_fields.hidden_field :status, value: 'past'%>
+          <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                <%= appointment_fields.label 'Dosis dadas', class: 'form-label' %>
+                <%= appointment_fields.select(:dose, [0,1,2], {}, class:'form-select') %>
+              </div>
+              <div class="form-outline mt-3">
+                <%= appointment_fields.label 'Fecha de ultima dosis dada', class: 'form-label' %>
+                <br>
+                <%= appointment_fields.date_field :date, order: [:day, :month, :year], class: 'datepicker' %>
+              </div>
+            </div>
+          </div>
+        <%end%>
+      </div>
+      <div class="col">
+        <h3>Vacuna Gripe</h3>
+        <%= form.fields_for :appointments, @gripe do |appointment_fields| %>
+          <%= appointment_fields.hidden_field :vaccine, value: 'gripe'%>
+          <%= appointment_fields.hidden_field :tipo, value: 'sistema'%>
+          <%= appointment_fields.hidden_field :status, value: 'past'%>
+          <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                  <%= appointment_fields.label 'Fecha de ultima dosis dada', class: 'form-label' %>
+                  <br>
+                  <%= appointment_fields.date_field :date, data_provide: 'datepicker', class: 'datepicker' %>
+              </div>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    </div>
+    <%=form.submit 'Completar registro', class:'btn btn-success btn-block mb-4' %>
+  <% end %>
+</div>

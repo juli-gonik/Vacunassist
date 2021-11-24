@@ -15,9 +15,14 @@
               <%= button_to 'Cerrar sesion', destroy_user_patient_session_path, method: :delete, class:'nav-link boton'%>
             </li>
             <li class="nav-item">
-              <%unless current_user_patient.appointments.find_by(vaccine: 'fiebre_amarilla') %>
+              <% unless current_user_patient.appointments.find_by(vaccine: 'fiebre_amarilla') %>
                 <%= link_to "Solicitar turno de fiebre amarilla", new_appointment_path, class:'nav-link' %>
-              <%end%>
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <% if current_user_patient.first_sign_in %>
+                <%= link_to "Completar registro", complete_profile_user_patient_path(current_user_patient), class:'nav-link' %>
+              <% end %>
             </li>
             <li class="nav-item">
               <%= link_to "Mis turnos", appointments_path, class:'nav-link' %>
@@ -33,7 +38,10 @@
               <%= link_to 'Turnos de hoy', vacunator_index_appointments_path, class:'nav-link'%>
             </li>
             <li class="nav-item">
-              <%= link_to 'Mis Datos', user_vacunator_path(current_user_vacunator), class:'nav-link'%>
+              <%= link_to 'Mis datos', user_vacunator_path(current_user_vacunator), class:'nav-link'%>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Registrar paciente', new_partial_user_patients_path, class:'nav-link'%>
             </li>
           <% else %>
             <li class="nav-item">
