@@ -11,6 +11,10 @@ module MainHelper
     end
   end
 
+  def pretty_vaccine(vaccine)
+    vaccine == 'fiebre_amarilla' ? 'Fiebre amarilla' : vaccine.capitalize
+  end
+
   def show_date(appointment)
     "#{name_of_the_day(appointment)} #{day_complete(appointment)}"
   end

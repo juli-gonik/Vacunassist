@@ -23,7 +23,8 @@ class AppointmentsController < ApplicationController
                                .where(date: DateTime.current.midnight)
                                .pedido
                                .where(user_patient: { vacunatorio: vacunatorio })
-    @appointments = @appointments.paginate(page: params[:page], per_page: 15)
+                               .paginate(page: params[:page], per_page: 15)
+    # @appointments = @appointments
 
   end
 
