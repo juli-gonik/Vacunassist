@@ -42,32 +42,6 @@ UserVacunator.create(
   vacunatorio: Vacunatorio.third
 )
 
-20.times do |i|
-  UserPatient.create(
-    name: "Paciente#{i}",
-    last_name: 'Paciente',
-    email: "paciente#{i}@paciente.com",
-    password: "paciente#{i}@paciente.com",
-    access_key: SecureRandom.hex(4),
-    dni: rand(1000000...9999999),
-    confirmed_at: DateTime.now,
-    vacunatorio: Vacunatorio.all.sample,
-    birth_date: Date.today,
-    risk_patient: [true, false].sample
-  )
-end
-
-20.times do |i|
-  Appointment.create(
-    status: :confirmed,
-    vaccine: Appointment.vaccines.keys.sample,
-    user_patient: UserPatient.where(vacunatorio: Vacunatorio.second).sample,
-    tipo: :pedido,
-    date: Date.today
-  )
-  puts "Vacuna #{i}"
-end
-
 puts 'Vacunadores'
 
 puts '-----Municipalidad------'

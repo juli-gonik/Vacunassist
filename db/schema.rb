@@ -49,8 +49,6 @@ ActiveRecord::Schema.define(version: 2021_11_19_190909) do
     t.string "access_key"
     t.datetime "birth_date"
     t.boolean "risk_patient"
-    t.boolean "email_confirmed", default: false
-    t.string "confirm_token"
     t.integer "vacunatorio_id"
     t.string "confirmation_token"
     t.datetime "confirmed_at"

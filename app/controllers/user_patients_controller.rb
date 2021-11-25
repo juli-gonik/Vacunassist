@@ -3,8 +3,6 @@
 class UserPatientsController < ApplicationController
   before_action :set_user_patient, only: [:edit, :update, :show, :edit_password, :update_password, :complete_profile, :handle_complete_profile]
 
-
-
   def vaccine_certificates
     @patient     = current_user_patient
     @appointment = Appointment.find(params[:appointment_id])
@@ -105,8 +103,6 @@ class UserPatientsController < ApplicationController
   end
 
   private
-
-  
 
   def create_fiebre_amarilla(user_patient)
     Appointment.create(
