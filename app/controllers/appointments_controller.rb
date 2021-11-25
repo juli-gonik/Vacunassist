@@ -18,13 +18,14 @@ class AppointmentsController < ApplicationController
   end
 
   def vacunator_index
+    @q = Appointment.ransack(params[:q])
+    @appointments = @q.result(distinct: true)
     vacunatorio = actual_user.vacunatorio
-    @appointments = Appointment.joins(:user_patient)
+    @appointments = Appointment.ransack(params[:q]).result    
                                .where(date: DateTime.current.midnight)
-                               .pedido
-                               .where(user_patient: { vacunatorio: vacunatorio })
+                               .pedido         
                                .paginate(page: params[:page], per_page: 15)
-    # @appointments = @appointments
+   # @appointments = @appointments
 
   end
 

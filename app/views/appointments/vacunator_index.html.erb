@@ -1,13 +1,40 @@
 <%= render 'main/header' %>
 <div class="container mt-5">
   <h3 class="d-flex justify-content-between mb-5">
-    <span>Numero de turnos de hoy: <%= @appointments.count %></span>
+   
     <%= link_to "Reprogramar turnos no atendidos", reprogramar_turnos_appointments_path, class: 'btn btn-success' %>
   </h3>
   <h4 class="mb-5">Zona: <%= @actual_user.vacunatorio.zone.capitalize %></h4>
 
   
   <table class="table table-bordered border-success card-shadow mt-5">
+
+  <%= search_form_for @q, url:vacunator_index_appointments_path do |f| %>
+
+    <%#= sort_link(@q, :name, 'Last Name', default_order: :desc) %>
+    <%= f.label :user_patient_name_cont %>
+    <%= f.search_field :user_patient_name_cont %>
+
+    
+    <%#= f.label :user_patient_name_or_dni_or_email_cont %>
+    <%#= f.search_field :user_patient_name_or_dni_or_email_cont %>
+
+    <%= f.submit %>
+
+    <%#= form.select(:fiebre_amarilla, [['Si',true], ['No',false]], {}, class:'form-select') 
+    [['covid', 0], ['gripe', 1], ['fiebre_amarilla', 2]
+    %>
+  <%end%>
+
+  <%= search_form_for(@q, url: vacunator_index_appointments_path, local: true) do |f| %>
+
+    <%= f.select("vaccine", Certificate.vaccines.keys, { include_blank: 'Vacuna' }, class:'form-select') %>
+
+    <%= f.button 'Search for' %>
+
+  <% end %>
+
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">Paciente</th>
