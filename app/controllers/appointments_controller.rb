@@ -18,14 +18,10 @@ class AppointmentsController < ApplicationController
   end
 
   def vacunator_index
-    vacunatorio = actual_user.vacunatorio
-    @appointments = Appointment.joins(:user_patient)
-                               .where(date: DateTime.current.midnight)
-                               .pedido
-                               .where(user_patient: { vacunatorio: vacunatorio })
-                               .paginate(page: params[:page], per_page: 15)
-    # @appointments = @appointments
-
+    @vacunatorio = actual_user.vacunatorio
+    filter = AppointmentFilter.new(filter_params)
+    @appointments = filter.call(@vacunatorio).order(created_at: :desc).paginate(page: params[:page], per_page: 15)
+    @count = filter.count
   end
 
   def reprogramar_turnos
@@ -73,5 +69,9 @@ class AppointmentsController < ApplicationController
 
   def params_appointment
     params.require(:appointment).permit!
+  end
+
+  def filter_params
+    params.require(:appointment_filter).permit(:query, :vaccine) if params[:appointment_filter]
   end
 end

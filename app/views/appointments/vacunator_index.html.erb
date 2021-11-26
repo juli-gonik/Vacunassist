@@ -1,11 +1,12 @@
 <%= render 'main/header' %>
 <div class="container mt-5">
   <h3 class="d-flex justify-content-between mb-5">
-    <span>Numero de turnos de hoy: <%= @appointments.count %></span>
+    <span>Numero de turnos de hoy: <%= @count %></span>
     <%= link_to "Reprogramar turnos no atendidos", reprogramar_turnos_appointments_path, class: 'btn btn-success' %>
   </h3>
-  <h4 class="mb-5">Zona: <%= @actual_user.vacunatorio.zone.capitalize %></h4>
-
+  <h4 class="mb-5">Zona: <%= @vacunatorio.zone.capitalize %></h4>
+  
+  <%= render 'filter' %>
   
   <table class="table table-bordered border-success card-shadow mt-5">
     <thead>

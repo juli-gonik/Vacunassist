@@ -5,6 +5,7 @@
   <td><%= appointment.vaccine == 'fiebre_amarilla' ? 'Fiebre amarilla' : appointment.vaccine.capitalize %></td>
   <td><%= appointment.vaccine == 'covid' ? appointment.dose : '-' %></td>
   <td><%= translate_status appointment.status %></td>
+
   <% if appointment.certificate.blank? %>
     <td><%= link_to 'Completar planilla', new_certificate_path(appointment: appointment), class: 'btn btn-success'%></td>
   <% else %>
