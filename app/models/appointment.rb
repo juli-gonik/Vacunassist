@@ -22,6 +22,10 @@ class Appointment < ApplicationRecord
     pedido: 1
   }
 
+  scope :today_appointments, lambda { |vacunatorio|
+    joins(:user_patient).where(date: DateTime.current.midnight).pedido.where(user_patient: { vacunatorio: vacunatorio })
+  }
+
   private
 
   def dose_one_date

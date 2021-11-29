@@ -3,18 +3,9 @@ class AppointmentsController < ApplicationController
 
   def index
     @appointments = current_user_patient.appointments.pedido
-  end
+    return @appointments unless params[:status].present?
 
-  def index_pending
-    @appointments = current_user_patient.appointments.pending.pedido
-  end
-
-  def index_confirmed
-    @appointments = current_user_patient.appointments.confirmed.pedido
-  end
-
-  def index_past
-    @appointments = current_user_patient.appointments.past.pedido
+    @appointments = @appointments.where(status: params[:status])
   end
 
   def vacunator_index
@@ -26,11 +17,7 @@ class AppointmentsController < ApplicationController
 
   def reprogramar_turnos
     vacunatorio = actual_user.vacunatorio
-    @appointments = Appointment.joins(:user_patient)
-                               .where(date: DateTime.current.midnight)
-                               .pedido
-                               .where(user_patient: { vacunatorio: vacunatorio })
-                               .where.not(status: :past)
+    @appointments = Appointment.today_appointments(vacunatorio)
     @appointments.each do |appointment|
       reschedule_appointment(appointment)
     end

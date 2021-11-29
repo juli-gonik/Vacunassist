@@ -6,8 +6,7 @@ class AppointmentFilter < BaseFilter
   attr_accessor :count
 
   def call(vacunatorio)
-    appointments = Appointment.all
-    appointments = appointments.joins(:user_patient).where(user_patient: { vacunatorio: vacunatorio }).pedido.where(date: DateTime.current.midnight)
+    appointments = Appointment.today_appointments(vacunatorio)
     @count = appointments.count
     appointments = search(appointments)
     appointments = appointments.where(vaccine: vaccine) if @vaccine.present?

@@ -36,7 +36,7 @@ module MainHelper
 
   def link_header(title, url)
     link_to url, class: 'nav-link text-success' do
-      tag.span title, class: "#{'selected_tab' if current_page?(url)}"
+      tag.span title, class: "#{'selected_tab' if current_page?(url, status: params[:status], check_parameters: true)}"
     end
   end
 
