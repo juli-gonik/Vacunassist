@@ -2,13 +2,15 @@ Rails.application.routes.draw do
   devise_for :user_patients, controllers: {
     registrations: 'user_patients/registrations',
     sessions: 'user_patients/sessions',
-    confirmations: 'user_patients/confirmations'
+    confirmations: 'user_patients/confirmations',
+    passwords: 'user_vacunators/passwords'
   }
 
   devise_for :user_vacunators, controllers: {
     registrations: 'user_vacunators/registrations',
     sessions: 'user_vacunators/sessions',
-    confirmations: 'user_vacunators/confirmations'
+    confirmations: 'user_vacunators/confirmations',
+    passwords: 'user_vacunators/passwords'
   }
 
   resources :appointments do

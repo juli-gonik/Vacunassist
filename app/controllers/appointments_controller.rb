@@ -2,10 +2,11 @@ class AppointmentsController < ApplicationController
   # before_action :set_user
 
   def index
+    @status       = params[:status]
     @appointments = current_user_patient.appointments.pedido
-    return @appointments unless params[:status].present?
+    return @appointments unless @status.present?
 
-    @appointments = @appointments.where(status: params[:status])
+    @appointments = @appointments.where(status: @status)
   end
 
   def vacunator_index
