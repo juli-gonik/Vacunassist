@@ -1,18 +1,19 @@
 Rails.application.routes.draw do
   devise_for :user_patients, controllers: {
     registrations: 'user_patients/registrations',
-    sessions:      'user_patients/sessions',
-    confirmations: 'user_patients/confirmations' }
+    sessions: 'user_patients/sessions',
+    confirmations: 'user_patients/confirmations',
+    passwords: 'user_vacunators/passwords'
+  }
 
   devise_for :user_vacunators, controllers: {
     registrations: 'user_vacunators/registrations',
-    sessions:      'user_vacunators/sessions',
-    confirmations: 'user_vacunators/confirmations' }
+    sessions: 'user_vacunators/sessions',
+    confirmations: 'user_vacunators/confirmations',
+    passwords: 'user_vacunators/passwords'
+  }
 
   resources :appointments do
-    get :index_confirmed, on: :collection
-    get :index_past, on: :collection
-    get :index_pending, on: :collection
     get :vacunator_index, on: :collection
     get :reprogramar_turnos, on: :collection
   end
@@ -25,8 +26,6 @@ Rails.application.routes.draw do
 
   get '/reset_token', to: 'main#reset_token'
   post '/mandame_aquella', to: 'main#mandame_aquella'
-
-  
 
   resources :user_vacunators do
     patch :update_password, on: :member

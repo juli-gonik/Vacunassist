@@ -4,13 +4,13 @@
 			<%= link_header('Todos los turnos', appointments_path)%>
 		</li>
 		<li class="nav-item">
-			<%= link_header('Pendientes', index_pending_appointments_path)%>
+			<%= link_header('Pendientes', appointments_path(status: :pending))%>
 		</li>
 		<li class="nav-item">
-			<%= link_header('Confirmados', index_confirmed_appointments_path)%>
+			<%= link_header('Confirmados', appointments_path(status: :confirmed))%>
 		</li>
 		<li class="nav-item">
-			<%= link_header('Turnos pasados', index_past_appointments_path)%>
+			<%= link_header('Turnos pasados', appointments_path(status: :past))%>
 		</li>
 	</ul>
 </div>

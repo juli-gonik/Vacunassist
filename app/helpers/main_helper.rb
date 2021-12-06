@@ -11,6 +11,17 @@ module MainHelper
     end
   end
 
+  def translate_status_dos(status)
+    case status
+    when 'pending'
+      'pendientes'
+    when 'confirmed'
+      'confirmados'
+    when 'past'
+      'atendidos'
+    end
+  end
+
   def pretty_vaccine(vaccine)
     vaccine == 'fiebre_amarilla' ? 'Fiebre amarilla' : vaccine.capitalize
   end
@@ -36,7 +47,7 @@ module MainHelper
 
   def link_header(title, url)
     link_to url, class: 'nav-link text-success' do
-      tag.span title, class: "#{'selected_tab' if current_page?(url)}"
+      tag.span title, class: "#{'selected_tab' if current_page?(url, status: params[:status], check_parameters: true)}"
     end
   end
 
