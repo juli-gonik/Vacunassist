@@ -1,5 +1,6 @@
 class AppointmentsController < ApplicationController
   # before_action :set_user
+  before_action :set_appointment, only: [:assign_appointment, :cancel_appointment, :assign_covid_under_sixty]
 
   def index
     @status       = params[:status]
@@ -11,7 +12,7 @@ class AppointmentsController < ApplicationController
 
   def vacunator_index
     @vacunatorio = actual_user.vacunatorio
-    filter = AppointmentFilter.new(filter_params)
+    filter = AppointmentFilterWithVacunatorio.new(filter_with_vacunatorio_params)
     @appointments = filter.call(@vacunatorio).order(created_at: :desc).paginate(page: params[:page], per_page: 15)
     @count = filter.count
   end
@@ -42,7 +43,65 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def all_appointments
+    @status = params[:status] if params[:status].present?
+    @status = params[:appointment_filter][:status] if params.dig(:appointment_filter, :status).present?
+    filter = AppointmentsFilter.new(filter_params)
+    @appointments = filter.call
+    @appointments = @appointments.where(status: @status).order(date: :desc).paginate(page: params[:page], per_page: 15)
+  end
+
+  def assign_appointment
+    date =
+      case @appointment.vaccine
+      when 'covid'
+        7.days.from_now
+      when 'fiebre_amarilla'
+        6.month.from_now
+      when 'gripe'
+        assign_gripe(@appointment)
+      end
+    date += 1.day if date.sunday?
+    update_and_send_email(@appointment, date)
+    redirect_to all_appointments_appointments_path(status: :confirmed), notice: 'Turno asignado con exito'
+  end
+
+  def cancel_appointment
+    @appointment.canceled!
+    UserMailer.with(appointment: @appointment).canceled_appointment.deliver_now
+    redirect_to all_appointments_appointments_path(status: :pending), notice: 'Turno cancelado'
+  end
+
+  def assign_covid_under_sixty
+    date = params.dig(:appointment, :date)
+    if date.blank?
+      redirect_to all_appointments_appointments_path(status: :pending), alert: 'Fecha no puede estar en blanco'
+    else
+      update_and_send_email(@appointment, date)
+      redirect_to all_appointments_appointments_path(status: :confirmed), notice: 'Turno asignado con exito'
+    end
+  end
+
   private
+
+  def update_and_send_email(appointment, date)
+    appointment.update(date: date)
+    appointment.confirmed!
+    UserMailer.with(appointment: appointment).assigned_appointment.deliver_now
+  end
+
+  def assign_gripe(appointment)
+    user_patient = appointment.user_patient
+    if user_patient.age <= 60
+      6.months.from_now
+    else
+      3.months.from_now
+    end
+  end
+
+  def set_appointment
+    @appointment = Appointment.find(params[:id])
+  end
 
   def reschedule_appointment(appointment)
     Appointment.create(
@@ -59,7 +118,12 @@ class AppointmentsController < ApplicationController
     params.require(:appointment).permit!
   end
 
+  def filter_with_vacunatorio_params
+    params.require(:appointment_filter_with_vacunatorio).permit(:query, :vaccine) if params[:appointment_filter]
+  end
+
   def filter_params
     params.require(:appointment_filter).permit(:query, :vaccine) if params[:appointment_filter]
   end
+  
 end

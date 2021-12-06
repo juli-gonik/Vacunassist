@@ -1,0 +1,10 @@
+<div class="container mt-5">
+	<ul class="nav nav-pills">
+		<li class="nav-item">
+			<%= link_header('Pendiente', all_appointments_appointments_path(status: :pending))%>
+		</li>
+		<li class="nav-item">
+			<%= link_header('Confirmados', all_appointments_appointments_path(status: :confirmed))%>
+		</li>
+	</ul>
+</div>

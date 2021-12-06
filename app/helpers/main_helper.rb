@@ -40,7 +40,7 @@ module MainHelper
 
   def appointment_date(appointment)
     return 'Pendiente a confirmación' if appointment.pending?
-    return show_date(appointment) if !appointment.pending? && appointment.pedido?
+    return show_date(appointment) if appointment.pedido? && (appointment.confirmed? || appointment.past?)
 
     '-'
   end
