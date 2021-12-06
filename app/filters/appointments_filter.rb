@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
-class AppointmentFilter < BaseFilter
-  attr_accessor :query
-  attr_accessor :vaccine
-  attr_accessor :count
+class AppointmentsFilter < BaseFilter
+  attr_accessor :query, :vaccine
 
-  def call(vacunatorio)
-    appointments = Appointment.today_appointments(vacunatorio)
-    @count = appointments.count
+  def call
+    appointments = Appointment.joins(:user_patient).pedido
     appointments = search(appointments)
     appointments = appointments.where(vaccine: vaccine) if @vaccine.present?
     appointments
@@ -26,7 +23,7 @@ class AppointmentFilter < BaseFilter
           dni LIKE #{part}
         )"
       end
-      appointments = appointments.joins(:user_patient).where(array_part.join(' AND '))
+      appointments = appointments.where(array_part.join(' AND '))
     end
     appointments
   end

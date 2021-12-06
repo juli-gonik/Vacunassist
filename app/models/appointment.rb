@@ -14,7 +14,7 @@ class Appointment < ApplicationRecord
     pending: 0,
     confirmed: 1,
     past: 2,
-    not_valid: 3
+    canceled: 3
   }
 
   enum tipo: {

@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   resources :appointments do
     get :vacunator_index, on: :collection
     get :reprogramar_turnos, on: :collection
+    get :all_appointments, on: :collection, as: :all_appointments
+    get :assign_appointment, on: :member
+    get :cancel_appointment, on: :member
+    post :assign_covid_under_sixty, on: :member
   end
 
   resources :certificates do

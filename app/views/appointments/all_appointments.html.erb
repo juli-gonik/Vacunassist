@@ -1,0 +1,40 @@
+<%= render 'appointment_tabs' %>
+<div class="container mt-5">
+  <h3 class="d-flex justify-content-between mb-5">
+    <span>Numero de turnos: <%= @count %></span>
+  </h3>
+  
+  <div class="row">
+    <div class="col d-flex gap-3 align-items-center">
+      <%= form_with model: AppointmentFilter.new, as: :filter,
+                    url: all_appointments_appointments_path(status: @status),  
+                    class: "d-flex gap-3", method: :get do |f| %>
+          <%= f.select("vaccine", Certificate.vaccines.keys.map { |v| [ v.humanize, v ] }, { prompt: 'Vacuna' }, class:'w-50 form-select', selected: params.dig(:appointment_filter, :vaccine)) %>
+          <%= f.text_field :query, class: "form-control w-50", placeholder: "Buscar", value: params.dig(:appointment_filter, :query)%>
+          <%= f.hidden_field :status, value: @status%>
+          <%= f.submit "Buscar", class:'btn btn-success'%>
+      <% end %>
+      <%= link_to 'Limpiar', all_appointments_appointments_path(status: @status), class: 'text-success' %>
+    </div>
+</div>
+
+  <table class="table table-bordered border-success card-shadow mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Paciente</th>
+        <th scope="col">¿Paciente de riesgo?</th>
+        <th scope="col">Edad</th>
+        <th scope="col">Vacuna</th>
+        <th scope="col">Dosis</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'appointment_pending', collection: @appointments, as: :appointment %>
+    </tbody>
+  </table>
+  <div class="digg_pagination d-flex justify-content-center mb-5 mt-4">
+    <%= will_paginate @appointments, previous_label: 'Anterior', next_label: 'Siguiente' %>
+  </div>
+</div>

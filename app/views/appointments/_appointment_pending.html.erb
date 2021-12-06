@@ -1,0 +1,22 @@
+<% user_patient = appointment.user_patient %>
+<tr>
+  <th scope="row"><%= "#{user_patient.name} #{user_patient.last_name}" %></th>
+  <td><%=user_patient.risk_patient? ? 'Si' : 'No' %></td>
+  <td><%= user_patient.age %></td>
+  <td><%= appointment.vaccine == 'fiebre_amarilla' ? 'Fiebre amarilla' : appointment.vaccine.capitalize %></td>
+  <td><%= appointment.vaccine == 'covid' ? appointment.dose : '-' %></td>
+  <td><%= appointment_date(appointment) %></td>
+  <td>
+    <% if appointment.pending? %>
+      <% if appointment.covid? && appointment.user_patient.age < 60 && !appointment.user_patient.risk_patient %>
+        <%= form_with model: appointment, url: assign_covid_under_sixty_appointment_path(appointment), method: :post, class:'mt-2 mb-2' do |form| %>
+          <%= form.date_field :date,  min: Date.today%>
+          <%= form.submit 'Asignar turno', class: 'btn btn-success' %>
+        <% end %>
+      <% else %>
+        <%= link_to "Asignar turno", assign_appointment_appointment_path(appointment), class:"btn btn-success" %>
+      <% end  %>
+      <%= link_to "Cancelar turno", cancel_appointment_appointment_path(appointment), class:"btn btn-danger", data: { confirm: "¿Estás seguro?" } %>
+    <% end  %>
+  </td>
+</tr>

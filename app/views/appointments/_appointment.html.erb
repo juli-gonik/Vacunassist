@@ -1,15 +1,13 @@
-<% unless appointment.not_valid? %>
-  <div class="card-shadow d-flex flex-column justify-content-start align-items-start p-4 gap-3 mb-3" style="background:#f8f9fa;">
-   <h2 class="badge bg-success"> <%= appointment.vaccine == 'fiebre_amarilla' ? 'Fiebre amarilla' : appointment.vaccine.capitalize %></h2>
-    <h6><i class="far fa-calendar-alt"></i> Fecha: <%=appointment_date(appointment)%></h6>
-    <% if appointment.vaccine == 'covid' %>
-      <h6><i class="fas fa-syringe"></i>Dosis: <%= appointment.dose %></h6>
-    <% end %>
-    <h6><i class="fas fa-map-marker-alt"></i> Zona:  <%= appointment.tipo == 'sistema' ? '-' : current_user_patient.vacunatorio.zone.capitalize %></h6>
-    <h6><i class="fas fa-clipboard-check"></i></i> Estado: <%= translate_status(appointment.status) %></h6>
-    <% if appointment.certificate.present? %>
-      <span><%= link_to 'Descargar certificado',render_certificate_certificate_path(appointment.certificate, format: :pdf), class:'btn btn-success me-3'%>
-      <span><%= link_to 'Ver certificado', render_certificate_certificate_path(appointment.certificate), class:'btn btn-dark me-3'%>
-    <% end %>
-  </div>
-<% end %>
+<div class="card-shadow d-flex flex-column justify-content-start align-items-start p-4 gap-3 mb-3" style="background:#f8f9fa;">
+  <h2 class="badge bg-success"> <%= appointment.vaccine == 'fiebre_amarilla' ? 'Fiebre amarilla' : appointment.vaccine.capitalize %></h2>
+  <h6><i class="far fa-calendar-alt"></i> Fecha: <%=appointment_date(appointment)%></h6>
+  <% if appointment.vaccine == 'covid' %>
+    <h6><i class="fas fa-syringe"></i>Dosis: <%= appointment.dose %></h6>
+  <% end %>
+  <h6><i class="fas fa-map-marker-alt"></i> Zona:  <%= appointment.tipo == 'sistema' ? '-' : current_user_patient.vacunatorio.zone.capitalize %></h6>
+  <h6><i class="fas fa-clipboard-check"></i></i> Estado: <%= translate_status(appointment.status) %></h6>
+  <% if appointment.certificate.present? %>
+    <span><%= link_to 'Descargar certificado',render_certificate_certificate_path(appointment.certificate, format: :pdf), class:'btn btn-success me-3'%>
+    <span><%= link_to 'Ver certificado', render_certificate_certificate_path(appointment.certificate), class:'btn btn-dark me-3'%>
+  <% end %>
+</div>
