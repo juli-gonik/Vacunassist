@@ -11,6 +11,7 @@ class CertificatesController < ApplicationController
 
     if @certificate.save
       @appointment.past!
+      create_new_covid_appointment(@appointment) if @appointment.covid? && @appointment.dose <= 1
       redirect_to vacunator_index_appointments_path, notice: 'Planilla completada con exito'
     else
       render :new
@@ -50,6 +51,18 @@ class CertificatesController < ApplicationController
   end
 
   private
+
+  def create_new_covid_appointment(appointment)
+    user_patient = appointment.user_patient
+
+    Appointment.create(
+      vaccine: 'covid',
+      status: 'pending',
+      tipo: 'pedido',
+      user_patient: user_patient,
+      dose: appointment.dose + 1
+    )
+  end
 
   def set_certificate
     @certificate = Certificate.find(params[:id])
