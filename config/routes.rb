@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get :assign_appointment, on: :member
     get :cancel_appointment, on: :member
     post :assign_covid_under_sixty, on: :member
+    get :ask_for_new_appointment, on: :member
   end
 
   resources :certificates do
@@ -45,5 +46,6 @@ Rails.application.routes.draw do
     post :create_partial, on: :collection
     get :complete_profile, on: :member
     patch :handle_complete_profile, on: :member
+    get :request_appointment, on: :member
   end
 end

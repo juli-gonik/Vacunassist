@@ -10,4 +10,7 @@
     <span><%= link_to 'Descargar certificado',render_certificate_certificate_path(appointment.certificate, format: :pdf), class:'btn btn-success me-3'%>
     <span><%= link_to 'Ver certificado', render_certificate_certificate_path(appointment.certificate), class:'btn btn-dark me-3'%>
   <% end %>
+  <% if appointment.canceled? %>
+    <span><%= link_to 'Pedir turno nuevamente', ask_for_new_appointment_appointment_path(appointment), class:'text-success'%></span>
+  <% end %>
 </div>

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserPatientsController < ApplicationController
-  before_action :set_user_patient, only: [:edit, :update, :show, :edit_password, :update_password, :complete_profile, :handle_complete_profile]
+  before_action :set_user_patient, only: %i[edit update show edit_password update_password complete_profile handle_complete_profile request_appointment]
 
   def vaccine_certificates
     @patient     = current_user_patient
@@ -136,7 +136,6 @@ class UserPatientsController < ApplicationController
   def set_user_patient
     @user_patient = UserPatient.find(params[:id])
   end
-
 
   def new_covid_appointment(user_patient)
     @covid = @user_patient.appointments.select { |appointment| appointment.vaccine == 'covid' }.last

@@ -1,10 +1,12 @@
 class AppointmentsController < ApplicationController
   # before_action :set_user
-  before_action :set_appointment, only: [:assign_appointment, :cancel_appointment, :assign_covid_under_sixty]
+  before_action :set_appointment, only: [:assign_appointment, :cancel_appointment, :assign_covid_under_sixty, :ask_for_new_appointment]
 
   def index
     @status       = params[:status]
     @appointments = current_user_patient.appointments.pedido
+
+    create_new_gripe(@appointments.gripe.last) if @appointments.gripe.last.date < 1.year.ago
     return @appointments unless @status.present?
 
     @appointments = @appointments.where(status: @status)
@@ -82,6 +84,11 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def ask_for_new_appointment
+    reschedule_appointment(@appointment)
+    redirect_to appointments_path(status: :pending), notice: 'Turno creado'
+  end
+
   private
 
   def update_and_send_email(appointment, date)
@@ -125,5 +132,14 @@ class AppointmentsController < ApplicationController
   def filter_params
     params.require(:appointment_filter).permit(:query, :vaccine) if params[:appointment_filter]
   end
-  
+
+  def create_new_appointment(appointment)
+    Appointment.create(
+      dose: appointment.dose,
+      vaccine: appointment.vaccine,
+      tipo: appointment.tipo,
+      status: :pending,
+      user_patient: appointment.user_patient
+    )
+  end
 end

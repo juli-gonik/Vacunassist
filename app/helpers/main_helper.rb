@@ -39,6 +39,7 @@ module MainHelper
   end
 
   def appointment_date(appointment)
+    return 'Cancelado' if appointment.canceled?
     return 'Pendiente a confirmación' if appointment.pending?
     return show_date(appointment) if appointment.pedido? && (appointment.confirmed? || appointment.past?)
 
