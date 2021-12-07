@@ -31,7 +31,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= render partial: 'appointment_pending', collection: @appointments, as: :appointment %>
+      <%= render partial: 'appointment_pending_or_confirmed', collection: @appointments, as: :appointment %>
     </tbody>
   </table>
   <div class="digg_pagination d-flex justify-content-center mb-5 mt-4">
