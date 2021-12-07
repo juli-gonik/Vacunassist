@@ -16,6 +16,13 @@ class UserPatient < User
 
   accepts_nested_attributes_for :appointments
 
+  scope :vacunatorio_patients, lambda { |vacunatorio|
+    joins(:appointments)
+      .where(vacunatorio: vacunatorio)
+      .where(appointments: { status: :confirmed })
+      .where(appointments: { vaccine: :covid })
+  }
+
   require 'date'
 
   def age

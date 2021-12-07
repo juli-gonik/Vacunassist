@@ -22,4 +22,10 @@ class UserMailer < ApplicationMailer
     @appointment = params[:appointment]
     mail(to: @appointment.user_patient.email, subject: 'Turno cancelado')
   end
+
+  def changed_address
+    @user_patient = params[:user_patient]
+    @vacunatorio = params[:vacunatorio]
+    mail(to: @user_patient.email, subject: 'Cambio de sede')
+  end
 end

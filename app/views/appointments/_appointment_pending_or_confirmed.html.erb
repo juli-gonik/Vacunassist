@@ -16,7 +16,7 @@
       <% else %>
         <%= link_to "Asignar turno", assign_appointment_appointment_path(appointment), class:"btn btn-success" %>
       <% end  %>
-      <%= link_to "Cancelar turno", cancel_appointment_appointment_path(appointment), class:"btn btn-danger", data: { confirm: "¿Estás seguro?" } %>
+      <%= link_to "Cancelar turno", cancel_appointment_appointment_path(appointment), class:"btn btn-secondary", data: { confirm: "¿Estás seguro?" } %>
     <% end  %>
   </td>
 </tr>

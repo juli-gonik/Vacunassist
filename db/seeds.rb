@@ -9,9 +9,9 @@
 
 
 puts 'Creando Vacunatorios'
-Vacunatorio.create(zone: 0) unless Vacunatorio.municipalidad.present?
-Vacunatorio.create(zone: 1) unless Vacunatorio.terminal.present?
-Vacunatorio.create(zone: 2) unless Vacunatorio.cementerio.present?
+Vacunatorio.create(zone: 0, place: 'Calle 55 1185') unless Vacunatorio.municipalidad.present?
+Vacunatorio.create(zone: 1, place: 'Av. 1 599') unless Vacunatorio.terminal.present?
+Vacunatorio.create(zone: 2, place: 'C. 71 1562') unless Vacunatorio.cementerio.present?
 
 puts 'Creando Usuario vacunadores'
 
@@ -109,6 +109,45 @@ end
     user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
     tipo: :pedido,
     date: Date.today
+  )
+  puts a.valid?
+  puts a.errors&.full_messages
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.first).sample,
+    tipo: :pedido
+  )
+  puts a.valid?
+  puts a.errors&.full_messages
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.second).sample,
+    tipo: :pedido
+  )
+  puts a.valid?
+  puts a.errors&.full_messages
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
+    tipo: :pedido
   )
   puts a.valid?
   puts a.errors&.full_messages

@@ -48,4 +48,6 @@ Rails.application.routes.draw do
     patch :handle_complete_profile, on: :member
     get :request_appointment, on: :member
   end
+
+  resources :vacunatorios, only: %i[edit index update]
 end

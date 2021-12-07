@@ -1,0 +1,26 @@
+<tr>
+  <td colspan="2"><%= vacunatorio.zone.capitalize %></td>
+  <td colspan="2"><%= vacunatorio.place %></td>
+  <td colspan="2" class="">
+    <button type="button" id="<%="buttonPlace#{vacunatorio.id}"%>" class="btn btn-success" onclick="myFunction(<%=vacunatorio.id%>)">Cambiar sede</button>
+    <div class="d-flex align-items-center gap-2">
+      <%= form_with model: vacunatorio, url: vacunatorio_path(vacunatorio), method: :patch, id: "formPlace#{vacunatorio.id}", class:'mt-2 mb-2 d-none' do |form| %>
+        <%= form.text_field :place%>
+        <%= form.submit 'Confirmar', class: 'btn btn-success' %>
+      <% end %>
+      <button type="button" id="<%="buttonCancel#{vacunatorio.id}"%>" class="btn btn-danger d-none" onclick="myFunction(<%=vacunatorio.id%>)">Cancelar</button>
+    </div>
+  </td>
+  
+</tr>
+
+<script>
+  function myFunction(id) {
+    let button = document.querySelector("#buttonPlace" + id);
+    let form = document.querySelector("#formPlace" + id);
+    let cancel = document.querySelector("#buttonCancel" + id);
+    button.classList.toggle('d-none');
+    form.classList.toggle('d-none');
+    cancel.classList.toggle('d-none');
+  }
+</script>

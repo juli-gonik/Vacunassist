@@ -53,8 +53,12 @@
             <li class="nav-item">
               <%= link_to "Registrarse", new_user_patient_registration_path, class:'nav-link' %>
             </li>
+            <!--PARA EL ADMIN-->
             <li class="nav-item">
               <%= link_to "Turnos pendientes", all_appointments_appointments_path(status: :pending), class:'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Vacunatorios", vacunatorios_path, class:'nav-link' %>
             </li>
           <% end %>
         </ul>
