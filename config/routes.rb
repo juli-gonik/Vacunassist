@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   post '/mandame_aquella', to: 'main#mandame_aquella'
 
   resources :user_vacunators do
+    get :all_user_vacunators, on: :collection
     patch :update_password, on: :member
     get   :edit_password, on: :member
   end

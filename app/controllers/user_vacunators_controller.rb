@@ -7,6 +7,14 @@ class UserVacunatorsController < ApplicationController
         @user_vacunator = UserVacunator.find(params[:id])
     end
 
+	def all_user_vacunators
+		#@status = params[:status] if params[:status].present?
+		#@status = params[:user_vacunators_filter][:status] if params.dig(:user_vacunators_filter, :status).present?
+		filter = UserVacunatorsFilter.new#(filter_params)
+		@vacunators = filter.call
+		@vacunators = @vacunators.order(date: :desc).paginate(page: params[:page], per_page: 15)
+	  end
+
   	def edit; end
 
  		def update

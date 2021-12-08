@@ -1,10 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# # This file should contain all the record creation needed to seed the database with its default values.
+# # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+# #
+# # Examples:
+# #
+# #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+# #   Character.create(name: 'Luke', movie: movies.first)
 
 
 
@@ -59,20 +59,24 @@ puts 'pass: vacunador3@vacunatorio.com '
 
 puts 'creando Usuarios pacientes'
 
-20.times do |i|
-  UserPatient.create(
-    name: "Paciente#{i}",
-    last_name: 'Paciente',
-    email: "paciente#{i}@paciente.com",
-    password: "paciente#{i}@paciente.com",
-    access_key: SecureRandom.hex(4),
-    dni: rand(1000000...9999999),
+100.times do |i|
+  email = Faker::Internet.email
+  a = UserPatient.create(
+    name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    email: email,
+    password: email,
+    access_key: '1234',
+    dni: rand(1_000_000...9_999_999),
     confirmed_at: DateTime.now,
     vacunatorio: Vacunatorio.all.sample,
-    birth_date: Date.today,
+    birth_date: Faker::Date.between(from: '1920-09-23', to: '2014-09-25'),
     risk_patient: [true, false].sample
   )
+  puts "Paciente: #{a.name} #{a.last_name}"
 end
+
+puts 'Turnos confirmados'
 
 20.times do |i|
   a = Appointment.new(
@@ -80,10 +84,8 @@ end
     vaccine: Appointment.vaccines.keys.sample,
     user_patient: UserPatient.where(vacunatorio: Vacunatorio.first).sample,
     tipo: :pedido,
-    date: Date.today
+    date: Faker::Date.between(from: Date.today, to: 6.months.from_now)
   )
-  puts a.valid?
-  puts a.errors&.full_messages
   a.save
   puts "Vacuna #{i}"
 end
@@ -94,10 +96,8 @@ end
     vaccine: Appointment.vaccines.keys.sample,
     user_patient: UserPatient.where(vacunatorio: Vacunatorio.second).sample,
     tipo: :pedido,
-    date: Date.today
+    date: Faker::Date.between(from: Date.today, to: 6.months.from_now)
   )
-  puts a.valid?
-  puts a.errors&.full_messages
   a.save
   puts "Vacuna #{i}"
 end
@@ -108,10 +108,81 @@ end
     vaccine: Appointment.vaccines.keys.sample,
     user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
     tipo: :pedido,
-    date: Date.today
+    date: Faker::Date.between(from: Date.today, to: 6.months.from_now)
   )
-  puts a.valid?
-  puts a.errors&.full_messages
+  a.save
+  puts "Vacuna #{i}"
+end
+
+puts 'Turnos pendientes'
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.first).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.second).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+puts 'Turnos atendidos'
+
+20.times do |i|
+  a = Appointment.new(
+    status: :past,
+    date: Faker::Date.between(from: 6.months.ago, to: Date.today),
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.first).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :past,
+    date: Faker::Date.between(from: 6.months.ago, to: Date.today),
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.second).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :past,
+    date: Faker::Date.between(from: 6.months.ago, to: Date.today),
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
+    tipo: :pedido
+  )
   a.save
   puts "Vacuna #{i}"
 end
