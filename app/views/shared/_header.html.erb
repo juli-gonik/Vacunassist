@@ -42,32 +42,14 @@
             </li>
             <li class="nav-item">
               <%= link_to 'Registrar paciente', new_partial_user_patients_path, class:'nav-link'%>
-            ###################################################
-            #aca se implementan las cosas de admin diego
             </li>
-            <% elsif user_admin_signed_in? %>
+          <% elsif user_admin_signed_in? %>
             <li class="nav-item">
               <%= button_to 'Cerrar sesion', destroy_user_admin_session_path, method: :delete, class:'nav-link boton'%>
             </li>
             <li class="nav-item">
-              <%= link_to 'Crear usuario vacunador', new_user_vacunator_session_path, class:'nav-link'%>
+              <%#= link_to 'Mis datos', user_admin_session_path(current_user_admin), class:'nav-link'%>
             </li>
-            <li class="nav-item">
-              <%= link_to 'Mis datos', user_admin_session_path(current_user_admin), class:'nav-link'%>
-              <% else %>
-            <li class="nsession_path,av-item">
-              <%= link_to "Soy administrador", new_user_admin_session_path, class:'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Soy vacunador", new_user_vacunator_session_path, class:'nav-link' %>
-            </li>            
-            <li class="nav-item">
-              <%= link_to "Ingresar", new_user_patient_session_path, class:'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Registrarse", new_user_patient_registration_path, class:'nav-link' %>
-            </li>
-            <!--PARA EL ADMIN-->
             <li class="nav-item">
               <%= link_to "Turnos pendientes", all_appointments_appointments_path(status: :pending), class:'nav-link' %>
             </li>
@@ -83,6 +65,20 @@
             <li class="nav-item">
               <%= link_to "Vacunadores", all_user_vacunators_user_vacunators_path, class:'nav-link' %>
             </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "Soy administrador", new_user_admin_session_path, class:'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Soy vacunador", new_user_vacunator_session_path, class:'nav-link' %>
+            </li>            
+            <li class="nav-item">
+              <%= link_to "Ingresar", new_user_patient_session_path, class:'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Registrarse", new_user_patient_registration_path, class:'nav-link' %>
+            </li>
+            
           <% end %>
         </ul>
       </div>

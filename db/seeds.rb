@@ -109,50 +109,11 @@ end
     user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
     tipo: :pedido,
     date: Faker::Date.between(from: Date.today, to: 6.months.from_now)
-<<<<<<< Updated upstream
-=======
   )
   a.save
   puts "Vacuna #{i}"
 end
 
-puts 'Turnos pendientes'
-
-20.times do |i|
-  a = Appointment.new(
-    status: :pending,
-    vaccine: Appointment.vaccines.keys.sample,
-    user_patient: UserPatient.where(vacunatorio: Vacunatorio.first).sample,
-    tipo: :pedido
-  )
-  a.save
-  puts "Vacuna #{i}"
-end
-
-20.times do |i|
-  a = Appointment.new(
-    status: :pending,
-    vaccine: Appointment.vaccines.keys.sample,
-    user_patient: UserPatient.where(vacunatorio: Vacunatorio.second).sample,
-    tipo: :pedido
-  )
-  a.save
-  puts "Vacuna #{i}"
-end
-
-20.times do |i|
-  a = Appointment.new(
-    status: :pending,
-    vaccine: Appointment.vaccines.keys.sample,
-    user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
-    tipo: :pedido
->>>>>>> Stashed changes
-  )
-  a.save
-  puts "Vacuna #{i}"
-end
-
-<<<<<<< Updated upstream
 puts 'Turnos pendientes'
 
 20.times do |i|
@@ -261,8 +222,6 @@ end
   puts "Vacuna #{i}"
 end
 
-=======
->>>>>>> Stashed changes
 puts 'Turnos atendidos'
 
 20.times do |i|
@@ -300,3 +259,12 @@ end
   a.save
   puts "Vacuna #{i}"
 end
+
+UserAdmin.create(
+  name: 'admin',
+  last_name: 'admin',
+  email: 'admin@admin.com',
+  password: 'admin@admin.com',
+  dni: 99_999_999,
+  confirmed_at: DateTime.now
+)

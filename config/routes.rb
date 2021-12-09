@@ -14,13 +14,9 @@ Rails.application.routes.draw do
 
   devise_for :user_admins, controllers: {
     registrations: 'user_admins/registrations',
-    sessions:      'user_admins/sessions',
-    confirmations: 'user_admins/_header_admin' }  
-
-  devise_for :user_admins, controllers: {
-    registrations: 'user_vacunators/registrations',
-    sessions:      'user_vacunators/sessions',
-    confirmations: 'user_vacunators/confirmations' }
+    sessions: 'user_admins/sessions',
+    confirmations: 'user_admins/_header_admin' 
+  }
 
   resources :appointments do
     get :vacunator_index, on: :collection
