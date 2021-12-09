@@ -12,6 +12,12 @@ Rails.application.routes.draw do
     passwords: 'user_vacunators/passwords'
   }
 
+  devise_for :user_admins, controllers: {
+    registrations: 'user_admins/registrations',
+    sessions: 'user_admins/sessions',
+    confirmations: 'user_admins/_header_admin' 
+  }
+
   resources :appointments do
     get :vacunator_index, on: :collection
     get :reprogramar_turnos, on: :collection

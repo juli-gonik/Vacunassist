@@ -259,3 +259,12 @@ end
   a.save
   puts "Vacuna #{i}"
 end
+
+UserAdmin.create(
+  name: 'admin',
+  last_name: 'admin',
+  email: 'admin@admin.com',
+  password: 'admin@admin.com',
+  dni: 99_999_999,
+  confirmed_at: DateTime.now
+)
