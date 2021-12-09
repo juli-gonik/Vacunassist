@@ -3,8 +3,4 @@
   <th scope="row"><%= "#{user_vacunator.name} #{user_vacunator.last_name}" %></th>
   <td><%= user_vacunator.dni %></td>
   <td><%= user_vacunator.vacunatorio %></td>
-  <td>
-      <%= link_to "Editar", assign_appointment_appointment_path(user_vacunator), class:"btn btn-success" %>
-      <%= link_to "Eliminar", cancel_appointment_appointment_path(user_vacunator), class:"btn btn-danger", data: { confirm: "¿Estás seguro?" } %>
-  </td>
 </tr>

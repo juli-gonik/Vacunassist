@@ -1,48 +1,52 @@
 class UserVacunatorsController < ApplicationController
-    before_action :set_user_vacunator, only: [:edit, :update, :show, :edit_password, :update_password  ] 
-    
-    def show; end
+  before_action :set_user_vacunator, only: %i[edit update show edit_password update_password]
 
-    def set_user_vacunator
-        @user_vacunator = UserVacunator.find(params[:id])
+  def show; end
+
+  def set_user_vacunator
+    @user_vacunator = UserVacunator.find(params[:id])
+  end
+
+  def all_user_vacunators
+    filter = UserVacunatorsFilter.new(filter_params)
+    @vacunators = filter.call
+    @vacunators = @vacunators.order(date: :desc).paginate(page: params[:page], per_page: 15)
+  end
+
+  def edit; end
+
+  def update
+    @user_vacunator = current_user_vacunator
+
+    if @user_vacunator.update(user_vacunator_without_password_params)
+      redirect_to @user_vacunator, notice: 'Datos actualizados con exito'
+    else
+      render :edit
     end
+  end
 
-	def all_user_vacunators
-		#@status = params[:status] if params[:status].present?
-		#@status = params[:user_vacunators_filter][:status] if params.dig(:user_vacunators_filter, :status).present?
-		filter = UserVacunatorsFilter.new#(filter_params)
-		@vacunators = filter.call
-		@vacunators = @vacunators.order(date: :desc).paginate(page: params[:page], per_page: 15)
-	  end
+  def edit_password; end
 
-  	def edit; end
+  def update_password
+    @user_vacunator = current_user_vacunator
+    redirect_to @user_vacunator and return if params.dig(:user_vacunator,
+                                                         :password).blank? && params.dig(:user_vacunator,
+                                                                                         :current_password).blank?
 
- 		def update
-			@user_vacunator = current_user_vacunator
+    if @user_vacunator.update_with_password(user_vacunator_params)
+      # Sign in the user_patient by passing validation in case their password changed
+      bypass_sign_in(@user_vacunator)
+      redirect_to @user_vacunator, notice: 'Contraseña actualizada con exito'
+    else
+      render :edit_password
+    end
+  end
 
-			if @user_vacunator.update(user_vacunator_without_password_params)
-				redirect_to @user_vacunator, notice: 'Datos actualizados con exito'
-			else
-				render :edit
-			end
-  	end
+  private
 
-		def edit_password; end
-
-		def update_password
-			@user_vacunator = current_user_vacunator
-			redirect_to @user_vacunator and return if params.dig(:user_vacunator, :password).blank? && params.dig(:user_vacunator, :current_password).blank?
-
-			if @user_vacunator.update_with_password(user_vacunator_params)
-				# Sign in the user_patient by passing validation in case their password changed
-				bypass_sign_in(@user_vacunator)
-				redirect_to @user_vacunator, notice: 'Contraseña actualizada con exito'
-			else
-				render :edit_password
-			end
-		end
-
-	private
+  def filter_params
+    params.require(:user_vacunators_filter).permit(:query, :zone) if params[:user_vacunators_filter]
+  end
 
   def user_vacunator_without_password_params
     params.require(:user_vacunator).permit(:name, :last_name, :vacunatorio_id, :dni)

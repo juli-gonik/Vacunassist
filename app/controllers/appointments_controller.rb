@@ -125,5 +125,4 @@ class AppointmentsController < ApplicationController
   def filter_params
     params.require(:appointment_filter).permit(:query, :vaccine) if params[:appointment_filter]
   end
-  
 end
