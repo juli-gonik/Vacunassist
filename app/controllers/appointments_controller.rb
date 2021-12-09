@@ -47,7 +47,7 @@ class AppointmentsController < ApplicationController
 
   def all_appointments
     @status = params[:status] if params[:status].present?
-    @status = params[:appointment_filter][:status] if params.dig(:appointment_filter, :status).present?
+    @status = params[:appointments_filter][:status] if params.dig(:appointments_filter, :status).present?
     filter = AppointmentsFilter.new(filter_params)
     @appointments = filter.call
     @appointments = @appointments.where(status: @status).order(date: :desc).paginate(page: params[:page], per_page: 15)
@@ -88,6 +88,25 @@ class AppointmentsController < ApplicationController
     reschedule_appointment(@appointment)
     redirect_to appointments_path(status: :pending), notice: 'Turno creado'
   end
+
+  def historial_de_turnos
+    @appointments = Appointment.joins(:user_patient, :vacunatorio).order(date: :desc).paginate(page: params[:page], per_page: 20)
+  end
+
+  def list
+    filter = HistoryFilter.new(history_filter)
+    appointments = filter.call.order("#{params[:column]} #{params[:direction]}")
+    render(partial: 'appointments', locals: { appointments: appointments })
+  end
+
+
+
+  def amount_appointments
+    @hola = consultar_params.blank?
+    filter = ConsultarFilter.new(consultar_params)
+    @appointments = filter.call
+  end
+
 
   private
 
@@ -130,7 +149,11 @@ class AppointmentsController < ApplicationController
   end
 
   def filter_params
-    params.require(:appointment_filter).permit(:query, :vaccine) if params[:appointment_filter]
+    params.require(:appointments_filter).permit(:query, :vaccine, :status) if params[:appointments_filter]
+  end
+
+  def consultar_params
+    params.require(:consultar_filter).permit(:zone, :date) if params[:consultar_filter]
   end
 
   def create_new_appointment(appointment)
@@ -141,5 +164,9 @@ class AppointmentsController < ApplicationController
       status: :pending,
       user_patient: appointment.user_patient
     )
+  end
+
+  def history_filter
+    params.permit(:query, :zone, :vaccine, :status, :date_to, :date_from)
   end
 end

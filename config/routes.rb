@@ -21,6 +21,9 @@ Rails.application.routes.draw do
     get :cancel_appointment, on: :member
     post :assign_covid_under_sixty, on: :member
     get :ask_for_new_appointment, on: :member
+    get :historial_de_turnos, on: :collection
+    get 'list', on: :collection
+    get 'amount_appointments', on: :collection
   end
 
   resources :certificates do

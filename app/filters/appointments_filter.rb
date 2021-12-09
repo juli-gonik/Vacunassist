@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AppointmentsFilter < BaseFilter
-  attr_accessor :query, :vaccine
+  attr_accessor :query, :vaccine, :status
 
   def call
     appointments = Appointment.joins(:user_patient).pedido

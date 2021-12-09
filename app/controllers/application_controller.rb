@@ -1,10 +1,26 @@
 class ApplicationController < ActionController::Base
   def actual_user
-    @actual_user ||= current_user_patient.present? ? current_user_patient : current_user_vacunator
+    @actual_user ||=
+      if current_user_patient.present?
+        current_user_patient
+      elsif current_user_vacunator.present?
+        current_user_vacunator
+      elsif current_user_admin.present?
+        current_user_admin
+      end
   end
 
   def actual_user_signed_in?
-    @actual_user_signed_in ||= current_user_patient.present? ? user_patient_signed_in? : user_vacunator_signed_in?
+    @actual_user_signed_in ||=
+      if current_user_patient.present?
+        user_patient_signed_in?
+      elsif current_user_vacunator.present?
+        user_patient_signed_in?
+      elsif current_user_admin.present?
+        user_admin_signed_in?
+      else
+        false
+      end
   end
 
   def after_sign_in_path_for(resource)

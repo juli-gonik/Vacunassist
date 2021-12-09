@@ -1,6 +1,7 @@
 class Appointment < ApplicationRecord
   belongs_to :user_patient
   has_one    :certificate
+  has_one    :vacunatorio, through: :user_patient
 
   validate :dose_one_date
 

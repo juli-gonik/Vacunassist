@@ -1,0 +1,43 @@
+<div class="container mt-5">
+  <h2 class="mb-5">Consultar donde y cuando hay que llevar cierta cantidad de vacunas</h2>
+  <%= form_with url: amount_appointments_appointments_path, method: :get, scope: :consultar_filter do |form| %>
+  <div class="row mt-4">
+      <div class="col-md-3">
+        <%= form.label 'Fecha' %>
+        <%= form.date_field :date,
+          class:'form-select',
+          data: { action: "input->search-form#search" },
+          min: Date.today,
+          required: true
+          %>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-3">
+        <%= form.select :zone,
+          Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.zone ] },
+          { include_blank: 'Vacunatorio' },
+          class:'form-select',
+          data: { action: "input->search-form#search" },
+          required: true
+          %>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-3 d-flex justify-content-between align-items-center">
+        <%= form.submit "Buscar", class:'btn btn-success'%>
+        <%= link_to 'Limpiar', amount_appointments_appointments_path, class: 'text-success' %>
+      </div>
+    </div>
+  <% end %>
+
+  <% unless @hola %>
+    <div class="mt-5">
+      <h4> Información para el dia <%= pretty_date(params[:consultar_filter][:date].to_date) %> en la zona de <%= params[:consultar_filter][:zone].capitalize %> </h4>
+      <h5 class="mt-2"> Turnos <b>totales:</b> <%= @appointments.count %></h5>
+      <h5> Turnos gripe: <%= @appointments.gripe.count %></h5>
+      <h5> Turnos fiebre amarilla: <%= @appointments.fiebre_amarilla.count %></h5>
+      <h5> Turnos covid: <%= @appointments.covid.count %></h5>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,141 @@
+<div class="container mt-5">
+  <h2 class="mb-5">Historial de turnos y pacientes de VacunAssist</h2>
+  <%= form_with url: list_appointments_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "appointments" } do |form| %>
+    <div class="row">
+      <div class="col mt-2">
+        <%= form.text_field :query,
+          placeholder: "Buscar por nombre, apellido y/o DNI",
+          autocomplete: "off",
+          class: 'form-control',
+          data: { action: "input->search-form#search" }
+        %>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col">
+        <%= form.select :zone,
+          Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.zone ] },
+          { include_blank: 'Vacunatorio' },
+          class:'form-select',
+          data: { action: "input->search-form#search" }
+          %>
+      </div>
+        <div class="col">
+          <%= form.select :vaccine,
+             Appointment.vaccines.keys.collect { |vaccine| [pretty_vaccine(vaccine), vaccine]},
+            { include_blank: 'Vacuna' },
+            class:'form-select',
+            data: { action: "input->search-form#search" }
+            %>
+        </div>
+        <div class="col">
+          <%= form.select :status,
+             Appointment.statuses.slice(:pending,:confirmed,:past).keys.collect { |state| [translate_status(state), state]},
+            { include_blank: 'Estado' },
+            class:'form-select',
+            data: { action: "input->search-form#search" }
+            %>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col">
+        <%= form.label 'Desde' %>
+        <%= form.date_field :date_from,
+          class:'form-select',
+          data: { action: "input->search-form#search" },
+          min: Date.today
+          %>
+      </div>
+      <div class="col">
+        <%= form.label 'Hasta' %>
+        <%= form.date_field :date_to,
+          class:'form-select',
+          data: { action: "input->search-form#search" },
+          min: Date.today
+          %>
+      </div>
+    </div>
+
+  <% end %>
+  <div class="mt-4"><%= link_to 'Limpiar', historial_de_turnos_appointments_path, class: 'text-success' %></div>
+<%= turbo_frame_tag "appointments", class:'container' do %>
+    <h3> Resultados de busqueda: </h3>
+  <div class="d-flex mt-4">
+    <div>
+      <h4>Turnos atendidos: <%= appointments.past.count %></h4>
+      <h4>Turnos pendientes: <%= appointments.pending.count %></h4>
+      <h4>Turnos confirmados: <%= appointments.confirmed.count %></h4>
+      <h4>Turnos totales: <%= appointments.all.count %></h4>
+    </div>
+    <div class="ms-5">
+      <h4>Turnos en la municipalidad: <%= appointments.where(vacunatorio: { zone: 'municipalidad' } ).count %></h4>
+      <h4>Turnos en la terminal: <%= appointments.where(vacunatorio: { zone: 'terminal' } ).count %></h4>
+      <h4>Turnos en el cementerio: <%= appointments.where(vacunatorio: { zone: 'cementerio' } ).count %></h4>
+    </div>
+  </div>
+  <table class="table table-bordered border-success card-shadow mt-5">
+    <thead>
+      <tr>
+        <th scope="col" class="position-relative">
+          <%= sort_indicator if params[:column] == 'users.name' %>
+          <%= sort_link(column: 'users.name', label: 'Nombre') %>        
+        </th>
+        <th scope="col" class="position-relative">
+          <%= sort_indicator if params[:column] == 'users.last_name' %>
+          <%= sort_link(column: "users.last_name", label: "Apellido") %>        
+        </th>
+        <th scope="col" class="position-relative">
+          <%= sort_indicator if params[:column] == 'users.dni' %>
+          <%= sort_link(column: "users.dni", label: "DNI") %>        
+        </th>
+        <th scope="col" class="position-relative">
+          <%= sort_indicator if params[:column] == 'date' %>
+          <%= sort_link(column: "date", label: "Fecha de turno") %>        
+        </th>
+        <th scope="col" class="position-relative">
+          <%= sort_indicator if params[:column] == 'vacunatorios.zone' %>
+          <%= sort_link(column: "vacunatorios.zone", label: "Zona") %>        
+        </th>
+        <th scope="col" class="position-relative">
+          <%= sort_indicator if params[:column] == 'vaccine' %>
+          <%= sort_link(column: "vaccine", label: "Vacuna") %>        
+        </th>
+        <th scope="col" class="position-relative">
+          <%= sort_indicator if params[:column] == 'status' %>
+          <%= sort_link(column: "status", label: "Estado") %>        
+        </th>
+      </tr>
+    </thead>
+      <tbody class="text-gray-700">
+        <% appointments.each do |appointment| %>
+          <tr>
+            <td class="text-left py-3 px-6">
+              <%= appointment.user_patient.name %>
+            </td>
+            <td class="text-left py-3 px-6">
+              <%= appointment.user_patient.last_name %>
+            </td>
+            <td class="text-left py-3 px-6">
+              <%= appointment.user_patient.dni %>
+            </td>
+            <td class="text-left py-3 px-6">
+              <%= appointment_date(appointment) if appointment.date.present?%>
+            </td>
+            <td class="text-left py-3 px-6">
+              <%= appointment.user_patient.vacunatorio.zone%>
+            </td>
+            <td class="text-left py-3 px-6">
+              <%= pretty_vaccine(appointment.vaccine)%>
+            </td>
+            <td class="text-left py-3 px-6">
+              <%= translate_status(appointment.status)%>
+            </td>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+
+</div>
+<% end %>
+  

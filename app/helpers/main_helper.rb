@@ -38,6 +38,10 @@ module MainHelper
     appointment.date.strftime('%d/%m/%Y')
   end
 
+  def pretty_date(date)
+    date.strftime('%d/%m/%Y')
+  end
+
   def appointment_date(appointment)
     return 'Cancelado' if appointment.canceled?
     return 'Pendiente a confirmación' if appointment.pending?
@@ -62,5 +66,21 @@ module MainHelper
     return '-' unless appointment.present?
 
     appointment.dose
+  end
+
+  def sort_link(column:, label:)
+    if column == params[:column]
+      link_to(label, list_appointments_path(column: column, direction: next_direction), class:'text-success')
+    else
+      link_to(label, list_appointments_path(column: column, direction: 'asc'), class:'text-success')
+    end
+  end
+
+  def next_direction
+    params[:direction] == 'asc' ? 'desc' : 'asc'
+  end
+
+  def sort_indicator
+    tag.span(class: "sort sort-#{params[:direction]}")
   end
 end
