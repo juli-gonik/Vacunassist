@@ -13,9 +13,14 @@ class UserMailer < ApplicationMailer
     mail(to: @user_patient.email, subject: 'Registro parcial en VacunAssist')
   end
 
+  def new_user_vacunator
+    @user_vacunator = params[:user_vacunator]
+    mail(to: @user_vacunator.email, subject: 'Vacunador de VacunAssist')
+  end
+
   def assigned_appointment
     @appointment = params[:appointment]
-    mail(to: @appointment.user_patient.email, subject: 'Turno confirmado')
+    mail(to: @appointment.user_vacunator.email, subject: 'Turno confirmado')
   end
 
   def canceled_appointment

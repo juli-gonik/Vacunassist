@@ -1,0 +1,44 @@
+<div class="container mb-5">
+
+  <h2 class="my-5">Crear usuairio vacunador</h2>
+
+  <%= form_with model: @user_vacunator, url: create_papa_user_vacunators_path, method: :post do |form| %>
+    <!-- 2 column grid layout with text inputs for the first and last names -->
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline">
+            <%= form.label 'Nombre', class: 'form-label' %>
+            <%= form.text_field :name, class:'form-control'%>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Apellido', class: 'form-label' %>
+          <%= form.text_field :last_name, class:'form-control'%>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline">
+            <%= form.label 'DNI', class: 'form-label' %>
+            <%= form.text_field :dni, class:'form-control'%>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <%= form.label 'Email', class: 'form-label' %>
+          <%= form.text_field :email, class:'form-control'%>
+        </div>
+      </div>
+    </div>
+    <div class="form-outline mb-4">
+      <%= form.label 'Elija donde será vacunado', class: 'form-label' %>
+      <%= form.select("vacunatorio_id", Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.id ] }, { include_blank: 'Vacunatorio  ' }, class:'form-select') %>
+      <% if form.object.errors[:vacunatorio].any? %>
+        <div class="text-danger"> <%= form.object.errors[:vacunatorio].to_sentence %> </div>
+      <% end %>
+    </div>
+    <%= form.submit 'Crear vacunador', class:'btn btn-success'%>
+  <% end %>
+</div>

@@ -13,6 +13,24 @@ class UserVacunatorsController < ApplicationController
     @vacunators = @vacunators.order(date: :desc).paginate(page: params[:page], per_page: 15)
   end
 
+  def new_perry
+    @user_vacunator = UserVacunator.new
+  end
+
+  def create_papa
+    @user_vacunator = UserVacunator.new(user_vacunator_params)
+    @user_vacunator.password = @user_vacunator.dni
+    @user_vacunator.password_confirmation = @user_vacunator.dni
+    @user_vacunator.skip_confirmation_notification!
+
+    if @user_vacunator.save
+      UserMailer.with(user_vacunator: @user_vacunator).new_user_vacunator.deliver_now
+      redirect_to all_user_vacunators_user_vacunators_path, notice: 'Vacunador creado con exito'
+    else
+      render :new_perry
+    end
+  end
+
   def edit; end
 
   def update

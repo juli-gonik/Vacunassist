@@ -1,6 +1,5 @@
 
 <div class="container mt-5">
-  
   <div class="row">
     <div class="col d-flex gap-3 align-items-center">
       <%= form_with model: UserVacunatorsFilter.new, as: :filter,
@@ -11,6 +10,7 @@
           <%= f.submit "Buscar", class:'btn btn-success'%>
       <% end %>
       <%= link_to 'Limpiar',all_user_vacunators_user_vacunators_path, class: 'text-success' %>
+      <%= link_to 'Nuevo vacunador', new_perry_user_vacunators_path, class: 'btn btn-success', style:'margin-left:auto;'%>
     </div>
 </div>
 
