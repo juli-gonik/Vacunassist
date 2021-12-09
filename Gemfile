@@ -29,6 +29,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

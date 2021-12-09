@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Bienvenido a Vacunasis, <%= @user_vacunator.name %></h3>
+    <p>
+      Te han registrado como vacunador
+    </p>
+
+    <h4>Tus datos son los siguientes:</h4> 
+    <p>
+        -Usuario: <%= @user_vacunator.email %>.
+        <br>
+        -Contraseña: <%= @user_vacunator.password %>
+        <br>
+        -Vacunatorio: <%= @user_vacunator.vacunatorio %><br>
+    </p> 
+        
+    <p>
+      Confirmá tu cuenta.
+      <p><%= link_to 'Confirmar mi cuenta', confirmation_url(@user_vacunator, confirmation_token: @user_vacunator.confirmation_token) %></p>
+    </p>
+  </body>
+</html>

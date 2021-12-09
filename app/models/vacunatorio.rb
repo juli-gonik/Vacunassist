@@ -9,4 +9,8 @@ class Vacunatorio < ApplicationRecord
     terminal: 1,
     cementerio: 2
   }
+  
+  def to_s
+    zone.capitalize
+  end
 end

@@ -1,0 +1,30 @@
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col d-flex gap-3 align-items-center">
+      <%= form_with model: UserVacunatorsFilter.new, as: :filter,
+                    url: all_user_vacunators_user_vacunators_path,  
+                    class: "d-flex gap-3", method: :get do |f| %>
+          <%= f.select(:zone, Vacunatorio.zones.keys.map { |v| [ v.humanize, v ] }, { prompt: 'Zona' }, class:'w-50 form-select') %>
+          <%= f.text_field :query, class: "form-control w-50", placeholder: "Buscar", value: params.dig(:user_vacunators_filter, :query)%>
+          <%= f.submit "Buscar", class:'btn btn-success'%>
+      <% end %>
+      <%= link_to 'Limpiar',all_user_vacunators_user_vacunators_path, class: 'text-success' %>
+      <%= link_to 'Nuevo vacunador', new_perry_user_vacunators_path, class: 'btn btn-success', style:'margin-left:auto;'%>
+    </div>
+</div>
+
+  <table class="table table-bordered border-success card-shadow mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Vacunador</th>
+        <th scope="col">DNI</th>
+        <th scope="col">Vacunatorio</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'user_vacunators', collection: @vacunators, as: :user_vacunator %>
+    </tbody>
+  </table>
+</div>

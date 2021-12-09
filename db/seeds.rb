@@ -186,3 +186,76 @@ end
   a.save
   puts "Vacuna #{i}"
 end
+
+puts 'Turnos pendientes'
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.first).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.second).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :pending,
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+puts 'Turnos atendidos'
+
+20.times do |i|
+  a = Appointment.new(
+    status: :past,
+    date: Faker::Date.between(from: 6.months.ago, to: Date.today),
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.first).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :past,
+    date: Faker::Date.between(from: 6.months.ago, to: Date.today),
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.second).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end
+
+20.times do |i|
+  a = Appointment.new(
+    status: :past,
+    date: Faker::Date.between(from: 6.months.ago, to: Date.today),
+    vaccine: Appointment.vaccines.keys.sample,
+    user_patient: UserPatient.where(vacunatorio: Vacunatorio.third).sample,
+    tipo: :pedido
+  )
+  a.save
+  puts "Vacuna #{i}"
+end

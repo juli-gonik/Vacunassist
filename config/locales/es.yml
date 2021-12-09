@@ -20,6 +20,12 @@ es:
               required:              'Campo obligatorio'
             current_password:
               invalid:               'Contraseña actual incorrecta'
+        user_vacunator:
+          attributes:
+            vacunatorio:
+              required:              'Campo obligatorio'
+            email:
+              invalid:               'Ingrese un email valido'
   date:
     monday:                'Lunes'
     tuesday:               'Martes'

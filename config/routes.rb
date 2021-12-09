@@ -3,11 +3,10 @@ Rails.application.routes.draw do
     registrations: 'user_patients/registrations',
     sessions: 'user_patients/sessions',
     confirmations: 'user_patients/confirmations',
-    passwords: 'user_vacunators/passwords'
+    passwords: 'user_patients/passwords'
   }
 
   devise_for :user_vacunators, controllers: {
-    registrations: 'user_vacunators/registrations',
     sessions: 'user_vacunators/sessions',
     confirmations: 'user_vacunators/confirmations',
     passwords: 'user_vacunators/passwords'
@@ -36,8 +35,11 @@ Rails.application.routes.draw do
   post '/mandame_aquella', to: 'main#mandame_aquella'
 
   resources :user_vacunators do
+    get :all_user_vacunators, on: :collection
     patch :update_password, on: :member
     get   :edit_password, on: :member
+    get   :new_perry, on: :collection
+    post  :create_papa, on: :collection
   end
 
   resources :user_patients do

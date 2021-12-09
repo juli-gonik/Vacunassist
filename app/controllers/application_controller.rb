@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  skip_before_action :verify_authenticity_token
+
   def actual_user
     @actual_user ||=
       if current_user_patient.present?
