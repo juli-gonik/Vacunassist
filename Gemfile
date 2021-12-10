@@ -21,15 +21,11 @@ gem 'redis', '~> 4.0'
 gem 'turbo-rails'
 
 gem 'turbolinks', '~> 5'
-gem "hotwire-rails", "~> 0.1.3"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
-
-gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -6,7 +6,7 @@ class AppointmentsController < ApplicationController
     @status       = params[:status]
     @appointments = current_user_patient.appointments.pedido
 
-    create_new_gripe(@appointments.gripe.last) if @appointments.gripe.last.date < 1.year.ago
+    # create_new_gripe(@appointments.gripe.last) if @appointments.gripe.last.date < 1.year.ago
     return @appointments unless @status.present?
 
     @appointments = @appointments.where(status: @status)
@@ -90,7 +90,8 @@ class AppointmentsController < ApplicationController
   end
 
   def historial_de_turnos
-    @appointments = Appointment.joins(:user_patient, :vacunatorio).order(date: :desc).paginate(page: params[:page], per_page: 20)
+    filter = HistoryFilter.new(history_filter)
+    @appointments = filter.call
   end
 
   def list

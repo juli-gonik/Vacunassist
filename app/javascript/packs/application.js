@@ -10,10 +10,7 @@
 //= require turbolinks
 //= require_tree .
 import Rails from "@rails/ujs"
-import { Turbo } from "@hotwired/turbo-rails";
-
 // import Turbolinks from "turbolinks"
-import "controllers";
 
 Rails.start()
 // Turbolinks.start()

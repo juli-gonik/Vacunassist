@@ -1,12 +1,13 @@
 <div class="container mt-5">
   <h2 class="mb-5">Historial de turnos y pacientes de VacunAssist</h2>
-  <%= form_with url: historial_de_turnos_appointments_path, method: :get do |form| %>
+  <%= form_with url: list_appointments_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "appointments" } do |form| %>
     <div class="row">
       <div class="col mt-2">
         <%= form.text_field :query,
           placeholder: "Buscar por nombre, apellido y/o DNI",
           autocomplete: "off",
-          class: 'form-control'
+          class: 'form-control',
+          data: { action: "input->search-form#search" }
         %>
       </div>
     </div>
@@ -15,21 +16,24 @@
         <%= form.select :zone,
           Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.zone ] },
           { include_blank: 'Vacunatorio' },
-          class:'form-select'
+          class:'form-select',
+          data: { action: "input->search-form#search" }
           %>
       </div>
         <div class="col">
           <%= form.select :vaccine,
              Appointment.vaccines.keys.collect { |vaccine| [pretty_vaccine(vaccine), vaccine]},
             { include_blank: 'Vacuna' },
-            class:'form-select'
+            class:'form-select',
+            data: { action: "input->search-form#search" }
             %>
         </div>
         <div class="col">
           <%= form.select :status,
              Appointment.statuses.slice(:pending,:confirmed,:past).keys.collect { |state| [translate_status(state), state]},
             { include_blank: 'Estado' },
-            class:'form-select'
+            class:'form-select',
+            data: { action: "input->search-form#search" }
             %>
         </div>
     </div>
@@ -39,6 +43,7 @@
         <%= form.label 'Desde' %>
         <%= form.date_field :date_from,
           class:'form-select',
+          data: { action: "input->search-form#search" },
           min: Date.today
           %>
       </div>
@@ -46,15 +51,15 @@
         <%= form.label 'Hasta' %>
         <%= form.date_field :date_to,
           class:'form-select',
+          data: { action: "input->search-form#search" },
           min: Date.today
           %>
       </div>
     </div>
 
-    <%=form.submit 'Buscar', class:'mt-3 btn btn-success'%>
-
   <% end %>
   <div class="mt-4"><%= link_to 'Limpiar', historial_de_turnos_appointments_path, class: 'text-success' %></div>
+<%= turbo_frame_tag "appointments", class:'container' do %>
     <h3> Resultados de busqueda: </h3>
   <div class="d-flex mt-4">
     <div>
@@ -73,25 +78,32 @@
     <thead>
       <tr>
         <th scope="col" class="position-relative">
-          Nombre
+          <%= sort_indicator if params[:column] == 'users.name' %>
+          <%= sort_link(column: 'users.name', label: 'Nombre') %>        
         </th>
         <th scope="col" class="position-relative">
-          Apellido      
+          <%= sort_indicator if params[:column] == 'users.last_name' %>
+          <%= sort_link(column: "users.last_name", label: "Apellido") %>        
         </th>
         <th scope="col" class="position-relative">
-          DNI
+          <%= sort_indicator if params[:column] == 'users.dni' %>
+          <%= sort_link(column: "users.dni", label: "DNI") %>        
         </th>
         <th scope="col" class="position-relative">
-          Fecha 
+          <%= sort_indicator if params[:column] == 'date' %>
+          <%= sort_link(column: "date", label: "Fecha de turno") %>        
         </th>
         <th scope="col" class="position-relative">
-          Zona        
+          <%= sort_indicator if params[:column] == 'vacunatorios.zone' %>
+          <%= sort_link(column: "vacunatorios.zone", label: "Zona") %>        
         </th>
         <th scope="col" class="position-relative">
-         Vacuna
+          <%= sort_indicator if params[:column] == 'vaccine' %>
+          <%= sort_link(column: "vaccine", label: "Vacuna") %>        
         </th>
         <th scope="col" class="position-relative">
-          Estado
+          <%= sort_indicator if params[:column] == 'status' %>
+          <%= sort_link(column: "status", label: "Estado") %>        
         </th>
       </tr>
     </thead>
@@ -125,4 +137,5 @@
   </table>
 
 </div>
+<% end %>
   
