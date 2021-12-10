@@ -1,5 +1,5 @@
 class UserVacunatorsController < ApplicationController
-  before_action :set_user_vacunator, only: %i[edit update show edit_password update_password]
+  before_action :set_user_vacunator, only: %i[edit update show edit_password update_password edit_vacunatorio update_vacunatorio destroy]
 
   def show; end
 
@@ -43,6 +43,16 @@ class UserVacunatorsController < ApplicationController
     end
   end
 
+  def edit_vacunatorio; end
+
+  def update_vacunatorio
+    if @user_vacunator.update(user_vacunator_vacunatorio_params)
+      redirect_to all_user_vacunators_user_vacunators_path, notice: 'Vacunador actualizado con exito'
+    else
+      render :edit_vacunatorio
+    end
+  end
+
   def edit_password; end
 
   def update_password
@@ -60,6 +70,11 @@ class UserVacunatorsController < ApplicationController
     end
   end
 
+  def destroy
+    @user_vacunator.destroy
+    redirect_to all_user_vacunators_user_vacunators_path, notice: 'Vacunador dado de baja'
+  end
+
   private
 
   def filter_params
@@ -68,6 +83,10 @@ class UserVacunatorsController < ApplicationController
 
   def user_vacunator_without_password_params
     params.require(:user_vacunator).permit(:name, :last_name, :vacunatorio_id, :dni)
+  end
+
+  def user_vacunator_vacunatorio_params
+    params.require(:user_vacunator).permit(:vacunatorio_id)
   end
 
   def user_vacunator_params

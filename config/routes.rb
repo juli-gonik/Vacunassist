@@ -40,12 +40,15 @@ Rails.application.routes.draw do
   get '/reset_token', to: 'main#reset_token'
   post '/mandame_aquella', to: 'main#mandame_aquella'
 
-  resources :user_vacunators do
+  resources :user_vacunators, except: [:destroy] do
     get :all_user_vacunators, on: :collection
     patch :update_password, on: :member
     get   :edit_password, on: :member
     get   :new_perry, on: :collection
     post  :create_papa, on: :collection
+    get :edit_vacunatorio, on: :member
+    patch :update_vacunatorio, on: :member
+    delete :destroy, on: :member
   end
 
   resources :user_patients do

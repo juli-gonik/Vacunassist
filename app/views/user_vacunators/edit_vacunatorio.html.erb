@@ -1,0 +1,23 @@
+<div class="container mb-5">
+
+  <h2 class="my-5">Editar Vacunatorio</h2>
+
+  <%= form_for @user_vacunator, url: update_vacunatorio_user_vacunator_path(@user_vacunator), method: :patch do |form| %>
+    <!-- 2 column grid layout with text inputs for the first and last names -->
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-outline">
+            <%= form.label 'Nombre', class: 'form-label' %>
+            <%= form.select :vacunatorio_id,
+              Vacunatorio.all.collect { |v| [ v.zone.capitalize, v.id ] },
+              { include_blank: 'Vacunatorio' },
+              class:'form-select'
+          %>
+          <% if form.object.errors[:vacunatorio].any? %>
+            <div class="text-danger"> <%= form.object.errors[:vacunatorio].to_sentence %> </div>
+          <% end %>
+        </div>
+    </div>
+    <%=form.submit 'Guardar', class:'btn btn-success btn-block my-4' %>
+  <% end %>
+</div>
