@@ -20,7 +20,7 @@ class UserMailer < ApplicationMailer
 
   def assigned_appointment
     @appointment = params[:appointment]
-    mail(to: @appointment.user_vacunator.email, subject: 'Turno confirmado')
+    mail(to: @appointment.user_patient.email, subject: 'Turno confirmado')
   end
 
   def canceled_appointment
